@@ -3,7 +3,7 @@ const NanoClient = require("./lib");
 const NANO_ADDRESS =
   "nano_1ninja7rh37ehfp9utkor5ixmxyg8kme8fnzc4zty145ibch8kf5jwpnzr3r";
 
-const client = new NanoClient({apiKey: '2QArmOEF9ZH6nmqk7r08ebEL2qaEYqTJxOSu8kCrqOE4rZAlv7sSOJrosBFqDHQc'});
+const client = new NanoClient({apiKey: 'yourapikey'});
 
 const handleErrors = e => {
   console.log("\nError: " + e.message);
@@ -18,5 +18,3 @@ client
   .block_count()
   .then(count => console.log("Block count:", count))
   .catch(handleErrors);
-
-//client.stop().then(() => console.log("Node stopped. Exiting..."));
