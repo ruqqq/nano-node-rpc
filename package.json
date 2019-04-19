@@ -1,6 +1,6 @@
 {
   "name": "nano-node-rpc",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A NodeJS client for the Nano' RPC API",
   "main": "lib/index.js",
   "directories": {
@@ -13,7 +13,7 @@
     "url": "git+https://github.com/BitDesert/nano-node-rpc.git"
   },
   "keywords": ["nano", "crypto", "json", "rpc", "api", "client"],
-  "author": "SkyzohKey <skyzohkey@protonmail.com>",
+  "author": "BitDesert <tobiaspalmer93@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/BitDesert/nano-node-rpc/issues"
