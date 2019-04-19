@@ -8,48 +8,34 @@ It produces JSON objects or strings as output, wrapped in native promises.
 All RPC calls are defined here:
 https://github.com/nanocurrency/nano-node/wiki/RPC-protocol
 
-#### Table of Contents
+## Getting Started
 
-* [Getting Started](#getting-started)
-  * [Examples](#examples)
-  * [Promise-wrapped responses](#promise-wrapped-responses)
-  * [Methods Names](#methods-names)
-  * [Arguments](#arguments)
-  * [Returned value](#returned-value)
-* [Testing](#testing)
-* [Possible future features](#possible-future-features)
-* [Donations](#donations)
-* [License (MIT)](#license)
-
-
-# Getting Started
-
-## Install
+### Install
 
 `npm install nano-node-rpc`
 
-### Nanode Node API
+#### My Nano Ninja Node API
 
 ```js
 const NanoClient = require('nano-node-rpc');
 const client = NanoClient({apiKey: process.env.NINJA_API_KEY})
 ```
 
-### Your own Nano RPC server
+#### Your own Nano RPC server
 
 ```js
 const NanoClient = require('nano-node-rpc');
 const client = NanoClient({url: 'http://localhost:7076'})
 ```
 
-## Use methods attached to `client` to send RPC calls
+### Use methods attached to `client` to send RPC calls
 
-### Examples
+#### Examples
 
 Head to the [`examples.js`](examples.js) file for even more!
 
 ```js
-const client = new RaiClient(NODE_ADDRESS [, decodeJSON]);
+const client = NanoClient({url: 'http://localhost:7076'})
 
 // Some methods do not require arguments:
 client
@@ -69,7 +55,7 @@ client
 
 // Some methods require arguments:
 client
-  .account_balance("xrb_mySuperAddress")
+  .account_balance("nano_1ninja7rh37ehfp9utkor5ixmxyg8kme8fnzc4zty145ibch8kf5jwpnzr3r")
   .then(balance => {
     console.log(balance);
     /**
@@ -94,8 +80,8 @@ to `catch()`.
 ### Methods Names
 
 The method calls are the same as the original RPC actions defined
-on the RaiBlocks wiki.
-(See https://github.com/clemahieu/raiblocks/wiki/RPC-protocol)
+on the Nano wiki.
+(See https://github.com/nanocurrency/nano-node/wiki/RPC-protocol)
 
-Example1: on the RaiBlocks wiki `account_balance` is called with `account`.
+Example1: on the Nano wiki `account_balance` is called with `account`.
 For the NodeJS client, the method is `account_balance` and the argument is the account string.
