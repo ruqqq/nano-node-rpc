@@ -3,7 +3,7 @@ const NanoClient = require("./lib");
 const NANO_ADDRESS =
   "nano_1ninja7rh37ehfp9utkor5ixmxyg8kme8fnzc4zty145ibch8kf5jwpnzr3r";
 
-const client = new NanoClient({url: 'http://localhost:7076'});
+const client = new NanoClient({url: 'http://52.67.104.248:7076'});
 
 const handleErrors = e => {
   console.log("\nError: " + e.message);

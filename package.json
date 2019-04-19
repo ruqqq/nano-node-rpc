@@ -1,29 +1,24 @@
 {
-  "name": "node-raiblocks-rpc",
-  "version": "0.2.0",
-  "description": "A NodeJS client for the RaiBlocks' RPC API",
+  "name": "nano-node-rpc",
+  "version": "0.3.0",
+  "description": "A NodeJS client for the Nano' RPC API",
   "main": "lib/index.js",
   "directories": {
     "lib": "lib"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha lib/tests.js --timeout 100000"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SkyzohKey/node-raiblocks-rpc.git"
+    "url": "git+https://github.com/BitDesert/nano-node-rpc.git"
   },
-  "keywords": ["raiblocks", "xrb", "json", "rpc", "api", "client"],
+  "keywords": ["nano", "crypto", "json", "rpc", "api", "client"],
   "author": "SkyzohKey <skyzohkey@protonmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/SkyzohKey/node-raiblocks-rpc/issues"
+    "url": "https://github.com/BitDesert/nano-node-rpc/issues"
   },
-  "homepage": "https://github.com/SkyzohKey/node-raiblocks-rpc#readme",
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "chai-as-promised": "^7.1.1",
-    "mocha": "^5.0.0"
-  },
+  "homepage": "https://github.com/BitDesert/nano-node-rpc#readme",
+  "devDependencies": {},
   "dependencies": {}
 }
