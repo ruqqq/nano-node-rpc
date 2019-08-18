@@ -5,8 +5,7 @@
 Nano RPC client written with NodeJS.  
 It produces JSON objects or strings as output, wrapped in native promises.
 
-All RPC calls are defined here:
-https://github.com/nanocurrency/nano-node/wiki/RPC-protocol
+All RPC calls are defined in the [Nano.org Docs](https://docs.nano.org/commands/rpc-protocol/).
 
 ## Getting Started
 
@@ -85,3 +84,31 @@ on the Nano wiki.
 
 Example1: on the Nano wiki `account_balance` is called with `account`.
 For the NodeJS client, the method is `account_balance` and the argument is the account string.
+
+If a method is not available with a method you can use the `_send` method like this:
+
+```js
+client._send('block_info', {
+  "json_block": true,
+  "hash": "87434F8041869A01C8F6F263B87972D7BA443A72E0A97D7A3FD0CCC2358FD6F9"
+}).then(block_info => {
+  console.log(block_info);
+  /**
+   * {
+   *   "block_account": "nano_1ipx847tk8o46pwxt5qjdbncjqcbwcc1rrmqnkztrfjy5k7z4imsrata9est",
+   *   "amount": "30000000000000000000000000000000000",
+   *   "balance": "5606157000000000000000000000000000000",
+   *   "height": "58",
+   *   "local_timestamp": "0",
+   *   "confirmed": "true",
+   *   "contents": {
+   *     ...
+   *   },
+   *   "subtype": "send"
+   * }
+   */
+})
+.catch(e => {
+  // Deal with your errors here.
+});
+```
