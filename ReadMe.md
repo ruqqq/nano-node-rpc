@@ -1,8 +1,8 @@
-# Nano NodeJS RPC Client
+# 🔗 Nano Node RPC Client
 
 [![npm version](https://nodei.co/npm/nano-node-rpc.png)](https://www.npmjs.com/package/nano-node-rpc)
 
-Nano RPC client written with NodeJS.  
+Nano RPC client written in Javascript with no external dependencies.
 It produces JSON objects or strings as output, wrapped in native promises.
 
 All RPC calls are defined in the [Nano.org Docs](https://docs.nano.org/commands/rpc-protocol/).
@@ -79,8 +79,7 @@ to `catch()`.
 ### Methods Names
 
 The method calls are the same as the original RPC actions defined
-on the Nano wiki.
-(See https://github.com/nanocurrency/nano-node/wiki/RPC-protocol)
+on the [Nano.org Docs](https://docs.nano.org/commands/rpc-protocol/).
 
 Example1: on the Nano wiki `account_balance` is called with `account`.
 For the NodeJS client, the method is `account_balance` and the argument is the account string.
