@@ -1,0 +1,10 @@
+- RPC Response Types
+- Complex Types for select Nano RPC methods
+- Additional RPC support
+- Custom HTTP Header support
+- Update Docs with new TS / JS integration (examples.js / ts)
+- Fix package json dependencies list
+- Beta package
+- Lint ?
+- Unit tests testing NanoNinja, Local RPC, Proxy Server
+- Proxy Server Integration guide

@@ -7,22 +7,19 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
  */
 export class NanoClient {
     nodeAddress: string;
-    headers: { Authorization?: string; 'content-type': string };
+    apiKey;
 
-    /*
+    /**
      * @function constructor
      * @description Build an instance of `NanoClient`
      * @param {Object} options - The options with either the node URL or API key
      */
     constructor(options: { url?: string; apiKey?: string }) {
+        this.apiKey = options.apiKey;
         if (options.url) {
             this.nodeAddress = options.url;
         } else if (options.apiKey) {
             this.nodeAddress = 'https://mynano.ninja/api/node';
-        }
-
-        if (options.apiKey) {
-            this.headers.Authorization = options.apiKey;
         }
     }
 
@@ -62,21 +59,30 @@ export class NanoClient {
      *                      either because of a problem of the request, or before the
      *                      request happen, when `JSON.stringify` fails
      */
-    private _send(method: string, params: Object = undefined): Promise<any> {
-        return axios
-            .request<any>({
-                method: 'POST',
-                url: this.nodeAddress,
-                data: this._buildRPCBody(method, params),
-                headers: this.headers,
-            })
-            .then((response: AxiosResponse) => Promise.resolve(response.data))
-            .catch((err: AxiosError) => Promise.reject(err));
+    private _send(method: string, params: Object = undefined): Promise<Object> {
+        const headers = {
+            'content-type': 'application/json',
+        };
+        if (this.apiKey) {
+            headers['Authorization'] = this.apiKey;
+        }
+        return new Promise<Object>((resolve, reject) => {
+            axios
+                .request({
+                    method: 'POST',
+                    url: this.nodeAddress,
+                    data: this._buildRPCBody(method, params),
+                    headers,
+                })
+                .then((response: AxiosResponse) => {
+                    resolve(response.data);
+                })
+                .catch(reject);
+        });
     }
 
     /**
      * Returns how many RAW is owned and how many have not yet been received by account.
-     *
      * @param {string} account - The XRB account address.
      */
     account_balance(account: string) {

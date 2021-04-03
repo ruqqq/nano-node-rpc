@@ -2,7 +2,7 @@
 
 [![npm version](https://nodei.co/npm/nano-node-rpc.png)](https://www.npmjs.com/package/nano-node-rpc)
 
-Nano RPC client written in Javascript with no external dependencies.
+Nano RPC client written in Typescript with no external dependencies.
 It produces JSON objects or strings as output, wrapped in native promises.
 
 All RPC calls are defined in the [Nano.org Docs](https://docs.nano.org/commands/rpc-protocol/).
