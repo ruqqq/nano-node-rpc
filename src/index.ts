@@ -1,31 +1,59 @@
-const net = require("net");
-const {
-  URL
-} = require("url");
-const http = require("http");
-const https = require("https");
+import axios, {AxiosError, AxiosResponse} from 'axios';
 
 /**
  * @class NanoClient
  * @description An RPC Client for RaiBlocks. The official RPC API is here:
  *              https://github.com/clemahieu/raiblocks/wiki/RPC-protocol
  */
-class NanoClient {
+export class NanoClient {
+
+  nodeAddress: string;
+  headers: { Authorization?: string, 'content-type': string };
+
 
   /*
    * @function constructor
    * @description Build an instance of `NanoClient`
    * @param {Object} options - The options with either the node URL or API key
    */
-  constructor(options) {
+  constructor(options: {
+    url?: string,
+    apiKey?: string
+  }) {
+
     if (options.url) {
       this.nodeAddress = options.url;
     } else if (options.apiKey) {
       this.nodeAddress = "https://mynano.ninja/api/node";
-      this.headers = {
-        'Authorization': options.apiKey,
-        'content-type': 'application/json'
+    }
+
+    if (options.apiKey) {
+      this.headers.Authorization = options.apiKey;
+    }
+  }
+
+  /**
+   * @function _buildRPCBody
+   * @private
+   * @description Create an RPC request body to be later used by `#_send`.
+   * @param {string} action - A given RPC action.
+   * @param {Object|Array} params - Parameters to be passed to the RPC daemon
+   * @return {Object} Returns an object containing the request (url, body).
+   */
+  private _buildRPCBody(action: string, params: Object): string {
+    try {
+      if (typeof params === "undefined") {
+        return JSON.stringify({
+          action: action
+        });
+      } else {
+        return JSON.stringify({
+          action: action,
+          ...params
+        });
       }
+    } catch (e) {
+      throw new Error(e);
     }
   }
 
@@ -34,96 +62,22 @@ class NanoClient {
    * @private
    * @description Send the request to the daemon
    * @param {string} method - the name of the RPC method
-   * @param {Object|Array} params - Parameters to be passed to the RPC method
+   * @param {Object} params - Parameters to be passed to the RPC method
    * @return {Promise} - A Promise which is resolved if the request succesfully
    *                      fetch the data, and rejected otherwise. Failure can happen
    *                      either because of a problem of the request, or before the
    *                      request happen, when `JSON.stringify` fails
    */
-  _send(method, params = undefined) {
-    return new Promise((resolve, reject) => {
-      var req = {};
-      try {
-        req = this._buildRPCReq(method, params);
-      } catch (err) {
-        return reject(err);
-      }
-
-      // Take HTTPS urls in consideration.
-      const url = new URL(req.url);
-      const lib = url.protocol === "https:" ? https : http;
-      const requestOptions = {
-        hostname: url.hostname,
-        port: url.port,
-        method: "POST",
-        path: url.pathname,
-        headers: this.headers
-      };
-
-      const request = lib.request(requestOptions, response => {
-        if (response.statusCode < 200 || response.statusCode > 299) {
-          reject(
-            new Error(
-              "Failed to fetch URL. Status code: " + response.statusCode
-            )
-          );
-        }
-
-        const body = [];
-
-        response.on("data", chunk => {
-          body.push(chunk);
-        });
-
-        response.on("end", () => {
-          const data = body.join("");
-
-          try {
-            return resolve(JSON.parse(data));
-          } catch (e) {
-            reject(e);
-          }
-        });
-      });
-
-      request.on("error", e => {
-        reject(e);
-      });
-
-      request.write(req.body);
-      request.end();
-    });
-  }
-
-  /**
-   * @function _buildRPCReq
-   * @private
-   * @description Create an RPC request object to be later used by `#_send`.
-   * @param {string} action - A given RPC action.
-   * @param {Object|Array} params - Parameters to be passed to the RPC daemon
-   * @return {Object} Returns an object containing the request (url, body).
-   */
-  _buildRPCReq(action, params) {
-    const req = {};
-    const payload = null;
-
-    req.url = this.nodeAddress;
-
-    try {
-      if (typeof params === "undefined") {
-        req.body = JSON.stringify({
-          action: action
-        });
-      } else {
-        req.body = JSON.stringify({
-          action: action,
-          ...params
-        });
-      }
-      return req;
-    } catch (e) {
-      throw new Error(e);
-    }
+  private _send(method: string, params: Object = undefined): Promise<any> {
+    return axios
+        .request<any>({
+          method: 'POST',
+          url: this.nodeAddress,
+          data: this._buildRPCBody(method, params),
+          headers: this.headers
+        })
+        .then((response: AxiosResponse) => Promise.resolve(response.data))
+        .catch((err: AxiosError) => Promise.reject(err));
   }
 
   /**
@@ -131,7 +85,7 @@ class NanoClient {
    *
    * @param {string} account - The XRB account address.
    */
-  account_balance(account) {
+  account_balance(account: string) {
     return this._send("account_balance", {
       account
     });
@@ -141,7 +95,7 @@ class NanoClient {
    * Get number of blocks for a specific account
    * @param {string} account - The XRB account address.
    */
-  account_block_count(account) {
+  account_block_count(account: string) {
     return this._send("account_block_count", {
       account
     });
@@ -156,7 +110,7 @@ class NanoClient {
    * @param {boolean} pending - Additionally returns pending balance for account (v8.1+)
    */
   account_info(
-    account,
+    account: string,
     representative = false,
     weight = false,
     pending = false
@@ -173,7 +127,7 @@ class NanoClient {
    * Get account number for the public key
    * @param {string} key - An XRB public key.
    */
-  account_get(key) {
+  account_get(key: string) {
     return this._send("account_get", {
       key
     });
@@ -182,9 +136,9 @@ class NanoClient {
   /**
    * Reports send/receive information for a account
    * @param {string} account - The XRB account address.
-   * @param {Number} count - Response length (default 1)
+   * @param {number} count - Response length (default 1)
    */
-  account_history(account, count = 1) {
+  account_history(account: string, count = 1) {
     return this._send("account_history", {
       account,
       count
@@ -195,7 +149,7 @@ class NanoClient {
    * Get the public key for account
    * @param {string} account - AAn XRB account.
    */
-  account_key(account) {
+  account_key(account: string) {
     return this._send("account_key", {
       account
     });
@@ -205,7 +159,7 @@ class NanoClient {
    * Returns the representative for account
    * @param {string} account - The XRB account address.
    */
-  account_representative(account) {
+  account_representative(account: string) {
     return this._send("account_representative", {
       account
     });
@@ -215,7 +169,7 @@ class NanoClient {
    * Returns the voting weight for account
    * @param {string} account - The XRB account address.
    */
-  account_weight(account) {
+  account_weight(account: string) {
     return this._send("account_weight", {
       account
     });
@@ -232,7 +186,7 @@ class NanoClient {
    * Retrieves a json representation of block
    * @param {string} hash - A block hash.
    */
-  block(hash) {
+  block(hash: string) {
     return this._send("block", {
       hash
     });
@@ -242,7 +196,7 @@ class NanoClient {
    * Retrieves a json representations of blocks
    * @param {Array<string>} hashes - A list of block hashes.
    */
-  blocks(hashes) {
+  blocks(hashes: string[]) {
     return this._send("blocks", {
       hashes
     });
@@ -252,7 +206,7 @@ class NanoClient {
    * Retrieves a json representations of blocks with transaction amount & block account
    * @param {Array<string>} hashes - A list of block hashes.
    */
-  blocks_info(hashes, source = false, pending = false) {
+  blocks_info(hashes: string, source = false, pending = false) {
     return this._send("blocks_info", {
       hashes,
       source,
@@ -264,7 +218,7 @@ class NanoClient {
    * Returns the account containing block
    * @param {string} hash - A block hash.
    */
-  block_account(hash) {
+  block_account(hash: string) {
     return this._send("block_account", {
       hash
     });
@@ -289,7 +243,7 @@ class NanoClient {
    * @param {string} block - A block hash.
    * @param {Number} count - Max count of items to return.
    */
-  chain(block, count = 1) {
+  chain(block: string, count = 1) {
     return this._send("chain", {
       block,
       count
@@ -301,7 +255,7 @@ class NanoClient {
    * @param {string} account - The XRB account address.
    * @param {Number} count - How much items to get from the list. (defaults to 1)
    */
-  frontiers(account, count = 1) {
+  frontiers(account: string, count = 1) {
     return this._send("frontiers", {
       account,
       count
@@ -320,7 +274,7 @@ class NanoClient {
    * @param {string} hash - A block hash.
    * @param {Number} count - How much items to get from the list. (defaults to 1)
    */
-  history(hash, count = 1) {
+  history(hash: string, count = 1) {
     return this._send("history", {
       hash,
       count
@@ -331,7 +285,7 @@ class NanoClient {
    * Divide a raw amount down by the Mrai ratio.
    * @param {string} amount - An amount to be converted.
    */
-  mrai_from_raw(amount) {
+  mrai_from_raw(amount: string | number) {
     return this._send("mrai_from_raw", {
       amount
     });
@@ -339,9 +293,9 @@ class NanoClient {
 
   /**
    * Multiply an Mrai amount by the Mrai ratio.
-   * @param {string} amount - An amount to be converted.
+   * @param {string | number} amount - An amount to be converted.
    */
-  mrai_to_raw(amount) {
+  mrai_to_raw(amount: string | number) {
     return this._send("mrai_to_raw", {
       amount
     });
@@ -349,9 +303,9 @@ class NanoClient {
 
   /**
    * Divide a raw amount down by the krai ratio.
-   * @param {string} amount - An amount to be converted.
+   * @param {string | number} amount - An amount to be converted.
    */
-  krai_from_raw(amount) {
+  krai_from_raw(amount: string | number) {
     return this._send("krai_from_raw", {
       amount
     });
@@ -359,9 +313,9 @@ class NanoClient {
 
   /**
    * Multiply an krai amount by the krai ratio.
-   * @param {string} amount - An amount to be converted.
+   * @param {string | number} amount - An amount to be converted.
    */
-  krai_to_raw(amount) {
+  krai_to_raw(amount: string | number) {
     return this._send("krai_to_raw", {
       amount
     });
@@ -369,9 +323,9 @@ class NanoClient {
 
   /**
    * Divide a raw amount down by the rai ratio.
-   * @param {string} amount - An amount to be converted.
+   * @param {string | number} amount - An amount to be converted.
    */
-  rai_from_raw(amount) {
+  rai_from_raw(amount: string | number) {
     return this._send("rai_from_raw", {
       amount
     });
@@ -379,9 +333,9 @@ class NanoClient {
 
   /**
    * Multiply an rai amount by the rai ratio.
-   * @param {string} amount - An amount to be converted.
+   * @param {string | number} amount - An amount to be converted.
    */
-  rai_to_raw(amount) {
+  rai_to_raw(amount: string | number) {
     return this._send("rai_to_raw", {
       amount
     });
@@ -400,7 +354,7 @@ class NanoClient {
    * @param {boolean} sorting - Sort the results by DESC.
    */
   ledger(
-    account,
+    account: string,
     count = 1,
     representative = false,
     weight = false,
@@ -427,7 +381,7 @@ class NanoClient {
    * @param {string} representative - An XRB representative account.
    * @param {string} source - A block source.
    */
-  block_create(type, key, account, representative, source) {
+  block_create(type: string, key: string, account: string, representative: string, source: string) {
     return this._send("block_create", {
       type,
       key,
@@ -442,7 +396,7 @@ class NanoClient {
    * @param {Object} block - A block to process. Format:
    * https://github.com/clemahieu/raiblocks/wiki/RPC-protocol#process-block
    */
-  process(block) {
+  process(block: string) {
     return this._send("process", {
       block
     });
@@ -457,5 +411,3 @@ class NanoClient {
     return this._send("representatives");
   }
 }
-
-module.exports = NanoClient;
