@@ -1,5 +1,5 @@
 {
-  "name": "nano-node-rpc",
+  "name": "@dev-ptera/nano-node-rpc",
   "version": "0.3.1",
   "description": "A NodeJS client for the Nano' RPC API",
   "main": "lib/index.js",
@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BitDesert/nano-node-rpc.git"
+    "url": "git+https://github.com/dev-ptera/nano-node-rpc.git"
   },
   "keywords": ["nano", "crypto", "json", "rpc", "api", "client"],
-  "author": "BitDesert <tobiaspalmer93@gmail.com>",
+  "author": "dev-ptera <dev.ptera@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/BitDesert/nano-node-rpc/issues"
+    "url": "https://github.com/dev-ptera/nano-node-rpc/issues"
   },
-  "homepage": "https://github.com/BitDesert/nano-node-rpc#readme",
+  "homepage": "https://github.com/dev-ptera/nano-node-rpc#readme",
   "devDependencies": {},
   "dependencies": {}
 }
