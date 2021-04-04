@@ -1,4 +1,4 @@
-const NanoClient = require('../dist').NanoClient;
+const NanoClient = require('../../dist').NanoClient;
 
 /* These tests are ran on my local machine; if integrated into a pipeline the following tests will fail:
     - local RPC node
