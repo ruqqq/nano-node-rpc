@@ -1,13 +1,13 @@
 export type AccountBalanceResponse = {
     balance: string;
     pending: string;
-}
+};
 export type AccountBlockCountResponse = {
-    block_count:  number;
-}
+    block_count: number;
+};
 export type AccountGetResponse = {
     account: string;
-}
+};
 export type AccountHistoryResponse = {
     account: string;
     history?: Array<{
@@ -20,4 +20,4 @@ export type AccountHistoryResponse = {
     }>;
     previous?: string;
     next?: string;
-}
+};
