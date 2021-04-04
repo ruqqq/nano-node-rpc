@@ -144,12 +144,12 @@ export class NanoClient {
      */
     account_info(
         account: string,
-        params?: {
+        params: {
             representative?: boolean;
             weight?: boolean;
             pending?: boolean;
         }
-    ) {
+    ): Promise<RPC.AccountInfoResponse> {
         return this._send('account_info', {
             account,
             ...params,

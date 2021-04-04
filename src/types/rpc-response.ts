@@ -21,3 +21,17 @@ export type AccountHistoryResponse = {
     previous?: string;
     next?: string;
 };
+export type AccountInfoResponse = {
+    frontier: string;
+    open_block: string;
+    representative_block: string;
+    balance: string;
+    modified_timestamp: number;
+    block_count: number;
+    confirmation_height: number;
+    confirmation_height_frontier: string;
+    account_version: number;
+    representative?: string;
+    weight?: string;
+    pending?: string;
+};
