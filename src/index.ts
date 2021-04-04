@@ -7,20 +7,16 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
  */
 export class NanoClient {
     nodeAddress: string;
-    apiKey;
+    requestHeaders: Object;
 
     /**
      * @function constructor
      * @description Build an instance of `NanoClient`
-     * @param {Object} options - The options with either the node URL or API key
+     * @param {Object} options - The options with either the node URL & custom request headers.
      */
-    constructor(options: { url?: string; apiKey?: string }) {
-        this.apiKey = options.apiKey;
-        if (options.url) {
-            this.nodeAddress = options.url;
-        } else if (options.apiKey) {
-            this.nodeAddress = 'https://mynano.ninja/api/node';
-        }
+    constructor(options: { url?: string; requestHeaders: Object }) {
+        this.nodeAddress = options?.url;
+        this.requestHeaders = options?.requestHeaders;
     }
 
     /**
@@ -60,11 +56,11 @@ export class NanoClient {
      *                      request happen, when `JSON.stringify` fails
      */
     private _send(method: string, params: Object = undefined): Promise<Object> {
-        const headers = {
+        let headers = {
             'content-type': 'application/json',
         };
-        if (this.apiKey) {
-            headers['Authorization'] = this.apiKey;
+        if (this.requestHeaders) {
+            headers = Object.assign(headers, this.requestHeaders);
         }
         return new Promise<Object>((resolve, reject) => {
             axios
