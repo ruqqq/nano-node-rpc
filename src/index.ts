@@ -56,7 +56,7 @@ export class NanoClient {
      * @description Send the request to the daemon
      * @param {string} method - the name of the RPC method
      * @param {Object} params - Parameters to be passed to the RPC method
-     * @return {Promise} - A Promise which is resolved if the request succesfully
+     * @return {Promise} - A Promise which is resolved if the request successfully
      *                      fetch the data, and rejected otherwise. Failure can happen
      *                      either because of a problem of the request, or before the
      *                      request happen, when `JSON.stringify` fails
@@ -79,7 +79,7 @@ export class NanoClient {
 
     /**
      * Returns how many RAW is owned and how many have not yet been received by account.
-     * @param {string} account - The XRB account address.
+     * @param {string} account - The NANO account address.
      */
     account_balance(account: string) {
         return this._send('account_balance', {
@@ -89,7 +89,7 @@ export class NanoClient {
 
     /**
      * Get number of blocks for a specific account
-     * @param {string} account - The XRB account address.
+     * @param {string} account - The NANO account address.
      */
     account_block_count(account: string) {
         return this._send('account_block_count', {
@@ -100,7 +100,7 @@ export class NanoClient {
     /**
      * Returns frontier, open block, change representative block, balance,
      * last modified timestamp from local database & block count for account
-     * @param {string} account - The XRB account address.
+     * @param {string} account - The NANO account address.
      * @param {boolean} representative - Additionally returns representative for account (v8.1+)
      * @param {boolean} weight - Additionally returns voting weight for account (v8.1+)
      * @param {boolean} pending - Additionally returns pending balance for account (v8.1+)
@@ -116,7 +116,7 @@ export class NanoClient {
 
     /**
      * Get account number for the public key
-     * @param {string} key - An XRB public key.
+     * @param {string} key - A NANO public key.
      */
     account_get(key: string) {
         return this._send('account_get', {
@@ -126,7 +126,7 @@ export class NanoClient {
 
     /**
      * Reports send/receive information for a account
-     * @param {string} account - The XRB account address.
+     * @param {string} account - The NANO account address.
      * @param {number} count - Response length (default 1)
      */
     account_history(account: string, count = 1) {
@@ -138,7 +138,7 @@ export class NanoClient {
 
     /**
      * Get the public key for account
-     * @param {string} account - AAn XRB account.
+     * @param {string} account - A NANO account.
      */
     account_key(account: string) {
         return this._send('account_key', {
@@ -148,7 +148,7 @@ export class NanoClient {
 
     /**
      * Returns the representative for account
-     * @param {string} account - The XRB account address.
+     * @param {string} account - The NANO account address.
      */
     account_representative(account: string) {
         return this._send('account_representative', {
@@ -158,7 +158,7 @@ export class NanoClient {
 
     /**
      * Returns the voting weight for account
-     * @param {string} account - The XRB account address.
+     * @param {string} account - The NANO account address.
      */
     account_weight(account: string) {
         return this._send('account_weight', {
@@ -243,7 +243,7 @@ export class NanoClient {
 
     /**
      * Returns a list of pairs of account and block hash representing the head block starting at account up to count
-     * @param {string} account - The XRB account address.
+     * @param {string} account - The NANO account address.
      * @param {Number} count - How much items to get from the list. (defaults to 1)
      */
     frontiers(account: string, count = 1) {
@@ -337,7 +337,7 @@ export class NanoClient {
      * last modified timestamp from local database & block count starting at account up to count
      * @enable_control required, version 8.1+
      *
-     * @param {string} account - The XRB account address.
+     * @param {string} account - The NANO account address.
      * @param {Number} count - Defines from where results are returned.
      * @param {boolean} representative - Additionally returns representative for each account.
      * @param {boolean} weight - Additionally returns voting weight for each account.
@@ -361,8 +361,8 @@ export class NanoClient {
      *
      * @param {string} type - The block type.
      * @param {string} key - The block signing key.
-     * @param {string} account - An XRB account.
-     * @param {string} representative - An XRB representative account.
+     * @param {string} account - A NANO account.
+     * @param {string} representative - A NANO representative account.
      * @param {string} source - A block source.
      */
     block_create(type: string, key: string, account: string, representative: string, source: string) {
