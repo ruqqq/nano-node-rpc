@@ -110,19 +110,27 @@ export class NanoClient {
      * Reports send/receive information for a account
      * @param {string} account - The NANO account address.
      * @param {number} count - Response length (default 1)
-     * @param {Object} params -
+     * @param {boolean} params.raw - Output all parameters of the block itself as seen in block_create or other APIs returning blocks
+     * @param {string} params.head - Use this block as the head of the account instead.
+     * @param {number} params.offset - Skips a number of blocks starting from head (if given). Not often used. (v11.0+)
+     * @param {boolean} params.reverse - Response starts from head and lists blocks up to the frontier. (v19.0+)
+     * @param {string[]} params.account_filter - Filter results to only show sends/receives connected to the provided account(s). (v19.0+)
      */
-    account_history(account: string, count = 1, params?: {
-        raw?: boolean,
-        head?: string,
-        offset?: number,
-        reverse?: boolean,
-        account_filter?: string[]
-    }): Promise<RPC.AccountHistoryResponse> {
+    account_history(
+        account: string,
+        count = 1,
+        params?: {
+            raw?: boolean;
+            head?: string;
+            offset?: number;
+            reverse?: boolean;
+            account_filter?: string[];
+        }
+    ): Promise<RPC.AccountHistoryResponse> {
         return this._send('account_history', {
             account,
             count,
-            ...params
+            ...params,
         });
     }
 
@@ -130,16 +138,21 @@ export class NanoClient {
      * Returns frontier, open block, change representative block, balance,
      * last modified timestamp from local database & block count for account
      * @param {string} account - The NANO account address.
-     * @param {boolean} representative - Additionally returns representative for account (v8.1+)
-     * @param {boolean} weight - Additionally returns voting weight for account (v8.1+)
-     * @param {boolean} pending - Additionally returns pending balance for account (v8.1+)
+     * @param {boolean} params.representative - Additionally returns representative for account (v9.0+)
+     * @param {boolean} params.weight - Additionally returns voting weight for account (v9.0+)
+     * @param {boolean} params.pending - Additionally returns pending balance for account (v9.0+)
      */
-    account_info(account: string, representative = false, weight = false, pending = false) {
+    account_info(
+        account: string,
+        params?: {
+            representative?: boolean;
+            weight?: boolean;
+            pending?: boolean;
+        }
+    ) {
         return this._send('account_info', {
             account,
-            representative,
-            weight,
-            pending,
+            ...params,
         });
     }
 
