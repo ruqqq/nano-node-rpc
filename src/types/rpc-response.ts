@@ -69,8 +69,8 @@ export type ActiveDifficultyResponse = {
     network_minimum: string;
     network_receive_current: string;
     network_receive_minimum: string;
-    difficulty_trend: string[]
-}
+    difficulty_trend: string[];
+};
 export type AvailableSupplyResponse = {
     available: string;
-}
+};
