@@ -195,16 +195,23 @@ export class NanoClient {
         return this._send('available_supply');
     }
 
+    /**
+     * Retrieves a json representation of block
+     * @param {string} hash - A block hash.
+     */
+    block(hash: string) {
+        return this._send('block', {
+            hash,
+        });
+    }
 
     /**
-     * Retrieves a json representations of blocks with transaction amount & block account
+     * Retrieves a json representations of blocks
      * @param {Array<string>} hashes - A list of block hashes.
      */
-    blocks_info(hashes: string, source = false, pending = false) {
-        return this._send('blocks_info', {
+    blocks(hashes: string[]) {
+        return this._send('blocks', {
             hashes,
-            source,
-            pending,
         });
     }
 
@@ -218,11 +225,27 @@ export class NanoClient {
         });
     }
 
+    // TODO: block_confirm
+
     /**
      * Reports the number of blocks in the ledger and unchecked synchronizing blocks
      */
     block_count() {
         return this._send('block_count');
+    }
+
+    // TODO: block_create, block_hash
+
+    /**
+     * Retrieves a json representations of blocks with transaction amount & block account
+     * @param {Array<string>} hashes - A list of block hashes.
+     */
+    blocks_info(hashes: string, source = false, pending = false) {
+        return this._send('blocks_info', {
+            hashes,
+            source,
+            pending,
+        });
     }
 
     /**
