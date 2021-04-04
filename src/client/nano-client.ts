@@ -195,25 +195,6 @@ export class NanoClient {
         return this._send('available_supply');
     }
 
-    /**
-     * Retrieves a json representation of block
-     * @param {string} hash - A block hash.
-     */
-    block(hash: string) {
-        return this._send('block', {
-            hash,
-        });
-    }
-
-    /**
-     * Retrieves a json representations of blocks
-     * @param {Array<string>} hashes - A list of block hashes.
-     */
-    blocks(hashes: string[]) {
-        return this._send('blocks', {
-            hashes,
-        });
-    }
 
     /**
      * Retrieves a json representations of blocks with transaction amount & block account
