@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 /**
  * @class NanoClient
@@ -6,17 +6,23 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
  *              https://github.com/clemahieu/raiblocks/wiki/RPC-protocol
  */
 export class NanoClient {
+    /* URL of data source */
     nodeAddress: string;
+    /* Custom HTTP headers for all requests */
     requestHeaders: Object;
+    /* HTTP header defaults. */
+    defaultHeaders = {
+        'content-type': 'application/json',
+    };
 
     /**
      * @function constructor
      * @description Build an instance of `NanoClient`
      * @param {Object} options - The options with either the node URL & custom request headers.
      */
-    constructor(options: { url?: string; requestHeaders: Object }) {
+    constructor(options: { url?: string; requestHeaders?: Object }) {
         this.nodeAddress = options?.url;
-        this.requestHeaders = options?.requestHeaders;
+        this.requestHeaders = options?.requestHeaders || {};
     }
 
     /**
@@ -56,22 +62,16 @@ export class NanoClient {
      *                      request happen, when `JSON.stringify` fails
      */
     private _send(method: string, params: Object = undefined): Promise<Object> {
-        let headers = {
-            'content-type': 'application/json',
-        };
-        if (this.requestHeaders) {
-            headers = Object.assign(headers, this.requestHeaders);
-        }
         return new Promise<Object>((resolve, reject) => {
             axios
                 .request({
                     method: 'POST',
                     url: this.nodeAddress,
                     data: this._buildRPCBody(method, params),
-                    headers,
+                    headers: Object.assign(this.defaultHeaders, this.requestHeaders),
                 })
                 .then((response: AxiosResponse) => {
-                    resolve(response.data);
+                    resolve(typeof response.data === 'string' ? JSON.parse(response.data) : response.data);
                 })
                 .catch(reject);
         });
