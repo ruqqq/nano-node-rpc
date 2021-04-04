@@ -160,7 +160,7 @@ export class NanoClient {
      * Get the public key for account
      * @param {string} account - A NANO account.
      */
-    account_key(account: string) {
+    account_key(account: string): Promise<RPC.AccountKeyResponse> {
         return this._send('account_key', {
             account,
         });
@@ -170,7 +170,7 @@ export class NanoClient {
      * Returns the representative for account
      * @param {string} account - The NANO account address.
      */
-    account_representative(account: string) {
+    account_representative(account: string): Promise<RPC.AccountRepresentativeResponse> {
         return this._send('account_representative', {
             account,
         });
@@ -180,16 +180,18 @@ export class NanoClient {
      * Returns the voting weight for account
      * @param {string} account - The NANO account address.
      */
-    account_weight(account: string) {
+    account_weight(account: string): Promise<RPC.AccountWeightResponse> {
         return this._send('account_weight', {
             account,
         });
     }
 
+    // TODO: account_balances, accounts_frontiers, accounts_pending, active_difficulty
+
     /**
      * Returns how many rai are in the public supply
      */
-    available_supply() {
+    available_supply(): Promise<RPC.AvailableSupplyResponse> {
         return this._send('available_supply');
     }
 

@@ -35,3 +35,42 @@ export type AccountInfoResponse = {
     weight?: string;
     pending?: string;
 };
+export type AccountKeyResponse = {
+    key: string;
+};
+export type AccountRepresentativeResponse = {
+    representative: string;
+};
+export type AccountWeightResponse = {
+    weight: string;
+};
+export type AccountBalancesResponse = {
+    balances: Array<{
+        [address: string]: {
+            balance: string;
+            pending: string;
+        };
+    }>;
+};
+export type AccountsFrontiersResponse = {
+    frontiers: Array<{
+        [address: string]: string;
+    }>;
+};
+/*
+export type AccountsPendingResponse = {
+    blocks: Array<{
+        [address: string]: string[] ? {} ?
+    }>
+} */
+export type ActiveDifficultyResponse = {
+    multiplier: string;
+    network_current: string;
+    network_minimum: string;
+    network_receive_current: string;
+    network_receive_minimum: string;
+    difficulty_trend: string[]
+}
+export type AvailableSupplyResponse = {
+    available: string;
+}
