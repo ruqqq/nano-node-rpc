@@ -1,6 +1,6 @@
 {
   "name": "@dev-ptera/nano-node-rpc",
-  "version": "0.3.1",
+  "version": "0.0.0",
   "description": "A NodeJS client for the Nano' RPC API",
   "main": "lib/index.js",
   "directories": {
@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsc",
     "prettier": "prettier \"src/**/**.{ts,js}\" --write",
-    "test": "jest"
+    "test": "yarn build && jest"
   },
   "repository": {
     "type": "git",
