@@ -34,18 +34,12 @@ export class NanoClient {
      * @param {Object|Array} params - Parameters to be passed to the RPC daemon
      * @return {Object} Returns an object containing the request (url, body).
      */
-    private _buildRPCBody(action: string, params: Object): string {
+    private _buildRPCBody(action: string, params: Object = {}): string {
         try {
-            if (typeof params === 'undefined') {
-                return JSON.stringify({
-                    action: action,
-                });
-            } else {
-                return JSON.stringify({
-                    action: action,
-                    ...params,
-                });
-            }
+            return JSON.stringify({
+                action: action,
+                ...params,
+            });
         } catch (e) {
             throw new Error(e);
         }
@@ -118,13 +112,13 @@ export class NanoClient {
      * @param {number} count - Response length (default 1)
      * @param {Object} params -
      */
-    account_history(account: string, count = 1, params: {
+    account_history(account: string, count = 1, params?: {
         raw?: boolean,
         head?: string,
         offset?: number,
         reverse?: boolean,
         account_filter?: string[]
-    } = {}): Promise<RPC.AccountHistoryResponse> {
+    }): Promise<RPC.AccountHistoryResponse> {
         return this._send('account_history', {
             account,
             count,
