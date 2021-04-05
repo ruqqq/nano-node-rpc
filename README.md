@@ -1,9 +1,8 @@
-# 🔗 Nano Node RPC Client
+# @dev-ptera/nano-node-rpc
 
-[![npm version](https://nodei.co/npm/nano-node-rpc.png)](https://www.npmjs.com/package/nano-node-rpc)
+This is a NodeJS Nano RPC client written in Typescript with a singular dependency on [axios](https://www.npmjs.com/package/axios). 
 
-Nano RPC client written in Typescript with no external dependencies.
-It produces JSON objects or strings as output, wrapped in native promises.
+Use this package to fetch data from a local Nano Node, a web API, or My Nano Ninja.  
 
 All RPC calls are defined in the [Nano.org Docs](https://docs.nano.org/commands/rpc-protocol/).
 
@@ -11,80 +10,91 @@ All RPC calls are defined in the [Nano.org Docs](https://docs.nano.org/commands/
 
 ### Install
 
-`npm install nano-node-rpc`
+`npm install axios @dev-ptera/nano-node-rpc`
 
-#### My Nano Ninja Node API
+### Usage
 
-```js
-const NanoClient = require('nano-node-rpc');
-const client = NanoClient({apiKey: process.env.NINJA_API_KEY})
+**Typescript**
+```ts
+import { NanoClient } from '@dev-ptera/nano-node-rpc';
+
+/* Below are three potential nano clients; pick one. */
+
+/* Localhost Nano Node */
+const localClient = new NanoClient({url: 'http://[::1]:7076'});
+
+/* Web API */
+const remoteClient = new NanoClient({url: '[URL]'});
+
+/* My Nano Ninja */
+const myNanoNinjaClient = new NanoClient({
+    url: 'https://mynano.ninja/api/node',
+    requestHeaders: {
+        'Authorization': process.env.NINJA_API_KEY
+    }
+});
 ```
 
-#### Your own Nano RPC server
 
+**Javascript**
 ```js
-const NanoClient = require('nano-node-rpc');
-const client = NanoClient({url: 'http://localhost:7076'})
+const NanoClient = require('@dev-ptera/nano-node-rpc').NanoClient;
+/* Same client configuration as typescript example. */
 ```
 
-### Use methods attached to `client` to send RPC calls
+### Query Node
 
-#### Examples
 
-Head to the [`examples.js`](examples.js) file for even more!
+```ts
+import { NanoClient } from '@dev-ptera/nano-node-rpc';
+import * as RPC from '@dev-ptera/nano-node-rpc/types'
+import { AxiosError } from "axios";
 
-```js
 const client = NanoClient({url: 'http://localhost:7076'})
 
 // Some methods do not require arguments:
 client
-  .block_count()
-  .then(count => {
-    console.log(count);
-    /**
-     * {
-     *   "count": "1826834",
-     *   "unchecked": "3385205"
-     * }
-     */
-  })
-  .catch(e => {
-    // Deal with your errors here.
-  });
+    .block_count()
+    .then((count: RPC.BlockCountReponse) => {
+        console.log(count);
+        /**
+         * {
+         *   "count": "1826834",
+         *   "unchecked": "3385205"
+         * }
+         */
+    })
+    .catch((e: AxiosError) => {
+        // Deal with your errors here.
+    });
 
 // Some methods require arguments:
 client
-  .account_balance("nano_1ninja7rh37ehfp9utkor5ixmxyg8kme8fnzc4zty145ibch8kf5jwpnzr3r")
-  .then(balance => {
-    console.log(balance);
-    /**
-     * {
-     *   "balance": "325586539664609129644855132177",
-     *   "pending": "2309370929000000000000000000000000"
-     * }
-     */
-  })
-  .catch(e => {
-    // Deal with your errors here.
-  });
+    .account_balance("nano_1ninja7rh37ehfp9utkor5ixmxyg8kme8fnzc4zty145ibch8kf5jwpnzr3r")
+    .then((balance: RPC.AccountBalanceResponse) => {
+        console.log(balance);
+        /**
+         * {
+         *   "balance": "325586539664609129644855132177",
+         *   "pending": "2309370929000000000000000000000000"
+         * }
+         */
+    })
+    .catch((e: AxiosError) => {
+        // Deal with your errors here.
+    });
 ```
+All method calls return native NodeJS promises. You need to use the `then()` / `catch()` pattern shown above. 
+If the call was successful, the data will be passed to `then()`, otherwise the error will be passed to `catch()`. 
 
-### Promise-wrapped responses
+See [`examples.js`](examples.js) file for more examples.
 
-All method calls return native NodeJS promises. You need to use the
-`then()` / `catch()` pattern shown above. If the call was succesful,
-the data will be passed to `then()`, otherwise the error will be passed
-to `catch()`.
+## Supported Methods
 
-### Methods Names
+The method calls are the same as the original RPC actions defined on the [Nano.org Docs](https://docs.nano.org/commands/rpc-protocol/).  
+E.g. the Nano `block_count` RPC method would be accessible via `client.block_count()`.
 
-The method calls are the same as the original RPC actions defined
-on the [Nano.org Docs](https://docs.nano.org/commands/rpc-protocol/).
-
-Example1: on the Nano wiki `account_balance` is called with `account`.
-For the NodeJS client, the method is `account_balance` and the argument is the account string.
-
-If a method is not available with a method you can use the `_send` method like this:
+If a method is not available as a method on `NanoClient`, you can use the `_send` method below: 
 
 ```js
 client._send('block_info', {
@@ -111,3 +121,11 @@ client._send('block_info', {
   // Deal with your errors here.
 });
 ```
+
+## Local Development
+
+`yarn build` > creates output in the `/dist` folder
+
+`yarn test` > runs test suite; requires a local Banano node to pass
+
+`yarn prettier` > run code formatting
