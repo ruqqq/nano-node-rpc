@@ -48,6 +48,9 @@ export class NanoClient {
     /**
      * @function _send
      * @private
+     * @description Send the request to the daemon
+     * @param {string} method - the name of the RPC method
+     * @param {Object} params - Parameters to be passed to the RPC method
      * @returns A Promise which is resolved if the request successfully
      * fetches the data without error, and rejected otherwise.
      * Failure can happen either because of a mis-configured request,
