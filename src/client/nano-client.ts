@@ -17,7 +17,7 @@ export class NanoClient {
     };
 
     /**
-     * @function constructor
+     * @constructor
      * @description Build an instance of `NanoClient`
      * @param {Object} options - The options with either the node URL & custom request headers.
      */
@@ -48,13 +48,10 @@ export class NanoClient {
     /**
      * @function _send
      * @private
-     * @description Send the request to the daemon
-     * @param {string} method - the name of the RPC method
-     * @param {Object} params - Parameters to be passed to the RPC method
-     * @return {Promise} - A Promise which is resolved if the request successfully
-     *                      fetch the data, and rejected otherwise. Failure can happen
-     *                      either because of a problem of the request, or before the
-     *                      request happen, when `JSON.stringify` fails
+     * @returns A Promise which is resolved if the request successfully
+     * fetches the data without error, and rejected otherwise.
+     * Failure can happen either because of a mis-configured request,
+     * server connectivity, or if `JSON.parse` fails
      */
     private _send(method: string, params?: Object): Promise<any> {
         return new Promise<any>((resolve, reject) => {
@@ -114,7 +111,7 @@ export class NanoClient {
      * @param {string} params.head - Use this block as the head of the account instead.
      * @param {number} params.offset - Skips a number of blocks starting from head (if given). Not often used. (v11.0+)
      * @param {boolean} params.reverse - Response starts from head and lists blocks up to the frontier. (v19.0+)
-     * @param {string[]} params.account_filter - Filter results to only show sends/receives connected to the provided account(s). (v19.0+)
+     * @param {Array<string>} params.account_filter - Filter results to only show sends/receives connected to the provided account(s). (v19.0+)
      */
     account_history(
         account: string,
@@ -124,7 +121,7 @@ export class NanoClient {
             head?: string;
             offset?: number;
             reverse?: boolean;
-            account_filter?: string[];
+            account_filter?: Array<string>;
         }
     ): Promise<RPC.AccountHistoryResponse> {
         return this._send('account_history', {
@@ -223,13 +220,13 @@ export class NanoClient {
         return this._send('block_count');
     }
 
-    // TODO: block_hash, block_info
+    // TODO: block_create, block_hash, block_info
 
     /**
      * Retrieves a json representations of blocks
      * @param {Array<string>} hashes - A list of block hashes.
      */
-    blocks(hashes: string[], json_block = true): Promise<RPC.BlocksResponse> {
+    blocks(hashes: Array<string>, json_block = true): Promise<RPC.BlocksResponse> {
         return this._send('blocks', {
             hashes,
         });
@@ -238,7 +235,8 @@ export class NanoClient {
      * Retrieves a json representations of blocks with transaction amount & block account
      * @param {Array<string>} hashes - A list of block hashes.
      */
-    blocks_info(hashes: string[], params?: { source: boolean, pending: boolean}) {
+    // TODO: pickup here.
+    blocks_info(hashes: Array<string>, params?: { source: boolean; pending: boolean }) {
         return this._send('blocks_info', {
             hashes,
             ...params,
@@ -262,7 +260,7 @@ export class NanoClient {
      * @param {string} account - The NANO account address.
      * @param {Number} count - How much items to get from the list. (defaults to 1)
      */
-    frontiers(account: string, count = 1) {
+    frontiers(account: string, count = 1): Promise<RPC.FrontiersResponse> {
         return this._send('frontiers', {
             account,
             count,
@@ -272,7 +270,7 @@ export class NanoClient {
     /**
      * Reports the number of accounts in the ledger
      */
-    frontiers_count() {
+    frontiers_count(): Promise<RPC.FrontiersCountResponse> {
         return this._send('frontiers_count');
     }
 
@@ -289,30 +287,10 @@ export class NanoClient {
     }
 
     /**
-     * Divide a raw amount down by the Mrai ratio.
+     * Divide a raw amount down by the krai ratio.
      * @param {string} amount - An amount to be converted.
      */
-    mrai_from_raw(amount: string | number) {
-        return this._send('mrai_from_raw', {
-            amount,
-        });
-    }
-
-    /**
-     * Multiply an Mrai amount by the Mrai ratio.
-     * @param {string | number} amount - An amount to be converted.
-     */
-    mrai_to_raw(amount: string | number) {
-        return this._send('mrai_to_raw', {
-            amount,
-        });
-    }
-
-    /**
-     * Divide a raw amount down by the krai ratio.
-     * @param {string | number} amount - An amount to be converted.
-     */
-    krai_from_raw(amount: string | number) {
+    krai_from_raw(amount: string): Promise<RPC.UnitConversionResponse> {
         return this._send('krai_from_raw', {
             amount,
         });
@@ -320,19 +298,39 @@ export class NanoClient {
 
     /**
      * Multiply an krai amount by the krai ratio.
-     * @param {string | number} amount - An amount to be converted.
+     * @param {string} amount - An amount to be converted.
      */
-    krai_to_raw(amount: string | number) {
+    krai_to_raw(amount: string): Promise<RPC.UnitConversionResponse> {
         return this._send('krai_to_raw', {
             amount,
         });
     }
 
     /**
-     * Divide a raw amount down by the rai ratio.
-     * @param {string | number} amount - An amount to be converted.
+     * Divide a raw amount down by the Mrai ratio.
+     * @param {string} amount - An amount to be converted.
      */
-    rai_from_raw(amount: string | number) {
+    mrai_from_raw(amount: string): Promise<RPC.UnitConversionResponse> {
+        return this._send('mrai_from_raw', {
+            amount,
+        });
+    }
+
+    /**
+     * Multiply an Mrai amount by the Mrai ratio.
+     * @param {string} amount - An amount to be converted.
+     */
+    mrai_to_raw(amount: string): Promise<RPC.UnitConversionResponse> {
+        return this._send('mrai_to_raw', {
+            amount,
+        });
+    }
+
+    /**
+     * Divide a raw amount down by the rai ratio.
+     * @param {string} amount - An amount to be converted.
+     */
+    rai_from_raw(amount: string): Promise<RPC.UnitConversionResponse> {
         return this._send('rai_from_raw', {
             amount,
         });
@@ -340,9 +338,9 @@ export class NanoClient {
 
     /**
      * Multiply an rai amount by the rai ratio.
-     * @param {string | number} amount - An amount to be converted.
+     * @param {string} amount - An amount to be converted.
      */
-    rai_to_raw(amount: string | number) {
+    rai_to_raw(amount: string): Promise<RPC.UnitConversionResponse> {
         return this._send('rai_to_raw', {
             amount,
         });
@@ -368,26 +366,6 @@ export class NanoClient {
             weight,
             pending,
             sorting,
-        });
-    }
-
-    /**
-     * Creates a json representations of new block based on input data & signed with private key or account in wallet
-     * @enable_control required, version 8.1+
-     *
-     * @param {string} type - The block type.
-     * @param {string} key - The block signing key.
-     * @param {string} account - A NANO account.
-     * @param {string} representative - A NANO representative account.
-     * @param {string} source - A block source.
-     */
-    block_create(type: string, key: string, account: string, representative: string, source: string) {
-        return this._send('block_create', {
-            type,
-            key,
-            account,
-            representative,
-            source,
         });
     }
 

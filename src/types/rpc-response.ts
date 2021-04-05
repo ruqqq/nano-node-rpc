@@ -80,3 +80,14 @@ export type BlocksResponse = {
         };
     };
 };
+export type FrontiersCountResponse = {
+    count: number;
+}
+export type FrontiersResponse = {
+    frontiers: {
+        [address: string]: string;
+    }
+}
+export type UnitConversionResponse = {
+    amount: string;
+};
