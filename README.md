@@ -1,6 +1,6 @@
 # @dev-ptera/nano-node-rpc
 
-This is a NodeJS Nano RPC client written in Typescript with a singular dependency on [axios](https://www.npmjs.com/package/axios). 
+This is a NodeJS Nano RPC API client written in Typescript with a singular dependency on [axios](https://www.npmjs.com/package/axios). 
 
 Use this package to fetch data from a local Nano Node, a web API, or My Nano Ninja.  
 
