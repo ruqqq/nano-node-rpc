@@ -275,18 +275,6 @@ export class NanoClient {
     }
 
     /**
-     * Reports send/receive information for a chain of blocks
-     * @param {string} hash - A block hash.
-     * @param {Number} count - How much items to get from the list. (defaults to 1)
-     */
-    history(hash: string, count = 1) {
-        return this._send('history', {
-            hash,
-            count,
-        });
-    }
-
-    /**
      * Divide a raw amount down by the krai ratio.
      * @param {string} amount - An amount to be converted.
      */
