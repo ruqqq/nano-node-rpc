@@ -199,19 +199,10 @@ export class NanoClient {
      * Retrieves a json representation of block
      * @param {string} hash - A block hash.
      */
-    block(hash: string) {
+    block(hash: string, json_block = true): Promise<RPC.BlockResponse> {
         return this._send('block', {
             hash,
-        });
-    }
-
-    /**
-     * Retrieves a json representations of blocks
-     * @param {Array<string>} hashes - A list of block hashes.
-     */
-    blocks(hashes: string[]) {
-        return this._send('blocks', {
-            hashes,
+            json_block,
         });
     }
 
@@ -219,40 +210,39 @@ export class NanoClient {
      * Returns the account containing block
      * @param {string} hash - A block hash.
      */
-    block_account(hash: string) {
+    block_account(hash: string): Promise<RPC.BlockAccountResponse> {
         return this._send('block_account', {
             hash,
         });
     }
 
-    // TODO: block_confirm
-
     /**
      * Reports the number of blocks in the ledger and unchecked synchronizing blocks
      */
-    block_count() {
+    block_count(): Promise<RPC.BlockCountResponse> {
         return this._send('block_count');
     }
 
-    // TODO: block_create, block_hash
+    // TODO: block_hash, block_info
 
+    /**
+     * Retrieves a json representations of blocks
+     * @param {Array<string>} hashes - A list of block hashes.
+     */
+    blocks(hashes: string[], json_block = true): Promise<RPC.BlocksResponse> {
+        return this._send('blocks', {
+            hashes,
+        });
+    }
     /**
      * Retrieves a json representations of blocks with transaction amount & block account
      * @param {Array<string>} hashes - A list of block hashes.
      */
-    blocks_info(hashes: string, source = false, pending = false) {
+    blocks_info(hashes: string[], params?: { source: boolean, pending: boolean}) {
         return this._send('blocks_info', {
             hashes,
-            source,
-            pending,
+            ...params,
         });
-    }
-
-    /**
-     * Reports the number of blocks in the ledger by type (send, receive, open, change)
-     */
-    block_count_type() {
-        return this._send('block_count_type');
     }
 
     /**
