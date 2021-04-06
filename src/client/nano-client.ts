@@ -279,6 +279,16 @@ export class NanoClient {
     }
 
     /**
+     * Get number of delegators for a specific representative account
+     * @param {string} account - The NANO account address.
+     */
+    delegators_count(account: string): Promise<RPC.DelegatorsCountResponse> {
+        return this._send('delegators', {
+            account,
+        });
+    }
+
+    /**
      * Returns a list of pairs of account and block hash representing the head block starting at account up to count
      * @param {string} account - The NANO account address.
      * @param {Number} count - How much items to get from the list. (defaults to 1)

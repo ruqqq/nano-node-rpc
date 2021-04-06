@@ -86,6 +86,9 @@ export type ChainResponse = {
 export type DelegatorsResponse = {
     [address: string]: string;
 };
+export type DelegatorsCountResponse = {
+    count: number;
+};
 export type FrontiersCountResponse = {
     count: number;
 };
