@@ -328,6 +328,29 @@ export class NanoClient {
     }
 
     /**
+     * Returns frontier, open block, change representative block, balance,
+     * last modified timestamp from local database & block count starting at account up to count
+     * @enable_control required, version 8.1+
+     *
+     * @param {string} account - The NANO account address.
+     * @param {Number} count - Defines from where results are returned.
+     * @param {boolean} representative - Additionally returns representative for each account.
+     * @param {boolean} weight - Additionally returns voting weight for each account.
+     * @param {boolean} pending - Additionally returns pending balance for each account.
+     * @param {boolean} sorting - Sort the results by DESC.
+     */
+    ledger(account: string, count = 1, representative = false, weight = false, pending = false, sorting = false) {
+        return this._send('ledger', {
+            account,
+            count,
+            representative,
+            weight,
+            pending,
+            sorting,
+        });
+    }
+
+    /**
      * Divide a raw amount down by the Mrai ratio.
      * @param {string} amount - An amount to be converted.
      */
@@ -344,6 +367,17 @@ export class NanoClient {
     mrai_to_raw(amount: string): Promise<RPC.UnitConversionResponse> {
         return this._send('mrai_to_raw', {
             amount,
+        });
+    }
+
+    /**
+     * Publish block to the network.
+     * @param {Object} block - A block to process. Format:
+     * https://github.com/clemahieu/raiblocks/wiki/RPC-protocol#process-block
+     */
+    process(block: string) {
+        return this._send('process', {
+            block,
         });
     }
 
@@ -368,45 +402,19 @@ export class NanoClient {
     }
 
     /**
-     * Returns frontier, open block, change representative block, balance,
-     * last modified timestamp from local database & block count starting at account up to count
-     * @enable_control required, version 8.1+
-     *
-     * @param {string} account - The NANO account address.
-     * @param {Number} count - Defines from where results are returned.
-     * @param {boolean} representative - Additionally returns representative for each account.
-     * @param {boolean} weight - Additionally returns voting weight for each account.
-     * @param {boolean} pending - Additionally returns pending balance for each account.
-     * @param {boolean} sorting - Sort the results by DESC.
-     */
-    ledger(account: string, count = 1, representative = false, weight = false, pending = false, sorting = false) {
-        return this._send('ledger', {
-            account,
-            count,
-            representative,
-            weight,
-            pending,
-            sorting,
-        });
-    }
-
-    /**
-     * Publish block to the network.
-     * @param {Object} block - A block to process. Format:
-     * https://github.com/clemahieu/raiblocks/wiki/RPC-protocol#process-block
-     */
-    process(block: string) {
-        return this._send('process', {
-            block,
-        });
-    }
-
-    /**
      * Returns a list of pairs of representative and its voting weight
      * @param {Number} count - Count of items to return. (Defaults to 1)
      * @param {boolean} sorting - Sort the returned results by DESC.
      */
-    representatives(count = 1, sorting = false) {
+    representatives(count = 1, sorting = false): Promise<RPC.RepresentativesResponse> {
+        return this._send('representatives');
+    }
+
+    /**
+     * Returns a list of online representative accounts that have voted recently
+     * @param {boolean} weight - Return voting weight for each representative.
+     */
+    representatives_online(weight = false): Promise<RPC.RepresentativesOnlineResponse> {
         return this._send('representatives');
     }
 }

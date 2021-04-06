@@ -97,6 +97,16 @@ export type FrontiersResponse = {
         [address: string]: string;
     };
 };
+export type RepresentativesResponse = {
+    [address: string]: string;
+}
+export type RepresentativesOnlineResponse = {
+    representatives: Array<{
+        [address: string]: "" | {
+            weight: string;
+        }
+    }>;
+}
 export type UnitConversionResponse = {
     amount: string;
 };
