@@ -369,7 +369,7 @@ export class NanoClient {
     representatives(count = 1, sorting = false): Promise<RPC.RepresentativesResponse> {
         return this._send('representatives', {
             count,
-            sorting
+            sorting,
         });
     }
 
