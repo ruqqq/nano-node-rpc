@@ -97,6 +97,17 @@ export type FrontiersResponse = {
         [address: string]: string;
     };
 };
+export type PeersResponse = {
+    peers: Array<{
+        [ip: string]:
+            | ''
+            | {
+                  protocol_version: string;
+                  node_id: string;
+                  type: string;
+              };
+    }>;
+};
 export type RepresentativesResponse = {
     [address: string]: string;
 };

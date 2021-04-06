@@ -367,6 +367,16 @@ export class NanoClient {
     }
 
     /**
+     * Returns a list of pairs of online peer IPv6:port and its node protocol network version
+     * @param {boolean} peer_details - Include network version and node ID
+     */
+    peers(peer_details = true): Promise<RPC.PeersResponse> {
+        return this._send('peers', {
+            peer_details,
+        });
+    }
+
+    /**
      * Publish block to the network.
      * @param {Object} block - A block to process. Format:
      * https://github.com/clemahieu/raiblocks/wiki/RPC-protocol#process-block
