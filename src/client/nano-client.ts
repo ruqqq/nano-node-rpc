@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import * as RPC from '../types/rpc-response';
-import { DelegatorsResponse } from '../types/rpc-response';
 
 /**
  * @class NanoClient
@@ -368,14 +367,21 @@ export class NanoClient {
      * @param {boolean} sorting - Sort the returned results by DESC.
      */
     representatives(count = 1, sorting = false): Promise<RPC.RepresentativesResponse> {
-        return this._send('representatives');
+        return this._send('representatives', {
+            count,
+            sorting
+        });
     }
 
     /**
      * Returns a list of online representative accounts that have voted recently
      * @param {boolean} weight - Return voting weight for each representative.
      */
-    representatives_online(weight = false): Promise<RPC.RepresentativesOnlineResponse> {
-        return this._send('representatives');
+    representatives_online(
+        weight = false
+    ): Promise<RPC.RepresentativesOnlineResponse | RPC.RepresentativesOnlineWeightResponse> {
+        return this._send('representatives_online', {
+            weight,
+        });
     }
 }
