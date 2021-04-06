@@ -139,9 +139,9 @@ export class NanoClient {
      * Returns frontier, open block, change representative block, balance,
      * last modified timestamp from local database & block count for account
      * @param {string} account - The NANO account address.
-     * @param {boolean} params.representative - Additionally returns representative for account
-     * @param {boolean} params.weight - Additionally returns voting weight for account
-     * @param {boolean} params.pending - Additionally returns pending balance for account
+     * @param {boolean} params.representative - Include representative for account
+     * @param {boolean} params.weight - Include voting weight for account
+     * @param {boolean} params.pending - Include pending balance for account
      */
     account_info(
         account: string,
@@ -231,17 +231,6 @@ export class NanoClient {
             hashes,
         });
     }
-    /**
-     * Retrieves a json representations of blocks with transaction amount & block account
-     * @param {Array<string>} hashes - A list of block hashes.
-     */
-    // TODO: pickup here.
-    blocks_info(hashes: Array<string>, params?: { source: boolean; pending: boolean }) {
-        return this._send('blocks_info', {
-            hashes,
-            ...params,
-        });
-    }
 
     /**
      * Returns a list of block hashes in the account chain starting at block up to count
@@ -324,29 +313,6 @@ export class NanoClient {
     }
 
     /**
-     * Returns frontier, open block, change representative block, balance,
-     * last modified timestamp from local database & block count starting at account up to count
-     * @enable_control required, version 8.1+
-     *
-     * @param {string} account - The NANO account address.
-     * @param {Number} count - Defines from where results are returned.
-     * @param {boolean} representative - Additionally returns representative for each account.
-     * @param {boolean} weight - Additionally returns voting weight for each account.
-     * @param {boolean} pending - Additionally returns pending balance for each account.
-     * @param {boolean} sorting - Sort the results by DESC.
-     */
-    ledger(account: string, count = 1, representative = false, weight = false, pending = false, sorting = false) {
-        return this._send('ledger', {
-            account,
-            count,
-            representative,
-            weight,
-            pending,
-            sorting,
-        });
-    }
-
-    /**
      * Divide a raw amount down by the Mrai ratio.
      * @param {string} amount - An amount to be converted.
      */
@@ -373,17 +339,6 @@ export class NanoClient {
     peers(peer_details = true): Promise<RPC.PeersResponse> {
         return this._send('peers', {
             peer_details,
-        });
-    }
-
-    /**
-     * Publish block to the network.
-     * @param {Object} block - A block to process. Format:
-     * https://github.com/clemahieu/raiblocks/wiki/RPC-protocol#process-block
-     */
-    process(block: string) {
-        return this._send('process', {
-            block,
         });
     }
 
