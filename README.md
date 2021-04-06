@@ -2,7 +2,9 @@
 
 This is a NodeJS Nano RPC API client written in Typescript with a singular dependency on [axios](https://www.npmjs.com/package/axios). 
 
-Use this package to fetch data from either a local Nano Node, a Nano Node Proxy server, or [My Nano Ninja](https://mynano.ninja/).  
+Use this package to fetch NanoCurrency data from either a local Nano Node, 
+a [Nano Node Proxy server](https://github.com/dev-ptera/nano-rpc-proxy), 
+or [My Nano Ninja](https://mynano.ninja/).  
 
 All RPC calls are defined in the [Nano.org Docs](https://docs.nano.org/commands/rpc-protocol/).
 
