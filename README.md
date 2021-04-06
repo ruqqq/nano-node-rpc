@@ -10,8 +10,13 @@ All RPC calls are defined in the [Nano.org Docs](https://docs.nano.org/commands/
 
 ### Install
 
-`npm install axios @dev-ptera/nano-node-rpc`
+`npm install @dev-ptera/nano-node-rpc`
 
+or 
+
+`yarn add @dev-ptera/nano-node-rpc`
+
+###
 ### Usage
 
 **Typescript**
@@ -42,7 +47,8 @@ const NanoClient = require('@dev-ptera/nano-node-rpc').NanoClient;
 /* Same client configuration as typescript example. */
 ```
 
-### Query Node
+###
+### Fetching Node Data
 
 
 ```ts
