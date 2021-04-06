@@ -80,6 +80,9 @@ export type BlocksResponse = {
         };
     };
 };
+export type ChainResponse = {
+    blocks: string[];
+};
 export type FrontiersCountResponse = {
     count: number;
 };
