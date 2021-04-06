@@ -83,6 +83,9 @@ export type BlocksResponse = {
 export type ChainResponse = {
     blocks: string[];
 };
+export type DelegatorsResponse = {
+    [address: string]: string;
+};
 export type FrontiersCountResponse = {
     count: number;
 };

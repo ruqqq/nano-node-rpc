@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import * as RPC from '../types/rpc-response';
+import { DelegatorsResponse } from '../types/rpc-response';
 
 /**
  * @class NanoClient
@@ -253,14 +254,27 @@ export class NanoClient {
      * @param {boolean} params.offset - Block hash offset amount (v18.0+)
      * @param {boolean} params.reverse - Invert results (v18.0+)
      */
-    chain(block: string, count = 1, params?: {
+    chain(
+        block: string,
+        count = 1,
+        params?: {
             offset: boolean;
             reverse: boolean;
-          }
+        }
     ): Promise<RPC.ChainResponse> {
         return this._send('chain', {
             block,
             count,
+        });
+    }
+
+    /**
+     * Returns a list of pairs of delegator names given account a representative and its balance
+     * @param {string} account - The NANO account address.
+     */
+    delegators(account: string): Promise<RPC.DelegatorsResponse> {
+        return this._send('delegators', {
+            account,
         });
     }
 
