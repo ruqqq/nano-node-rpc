@@ -109,16 +109,19 @@ export type PeersResponse = {
     }>;
 };
 export type RepresentativesResponse = {
-    [address: string]: string;
+    representatives: {
+        [address: string]: string;
+    };
 };
 export type RepresentativesOnlineResponse = {
-    representatives: Array<{
-        [address: string]:
-            | ''
-            | {
-                  weight: string;
-              };
-    }>;
+    representatives: string[];
+};
+export type RepresentativesOnlineWeightResponse = {
+    representatives: {
+        [address: string]: {
+            weight: string;
+        };
+    };
 };
 export type UnitConversionResponse = {
     amount: string;
