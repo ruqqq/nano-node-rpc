@@ -23,21 +23,21 @@ or
 
 **Typescript**
 ```ts
-import { NanoClient } from '@dev-ptera/nano-node-rpc';
+import { NanoClient } from "@dev-ptera/nano-node-rpc";
 
 /* Below are three potential nano clients; pick one. */
 
 /* Localhost Nano Node */
-const localClient = new NanoClient({url: 'http://[::1]:7076'});
+const localClient = new NanoClient({url: "http://[::1]:7076"});
 
 /* Web API */
-const remoteClient = new NanoClient({url: '[URL]'});
+const remoteClient = new NanoClient({url: "[URL]"});
 
 /* My Nano Ninja */
 const myNanoNinjaClient = new NanoClient({
-    url: 'https://mynano.ninja/api/node',
+    url: "https://mynano.ninja/api/node",
     requestHeaders: {
-        'Authorization': process.env.NINJA_API_KEY
+        "Authorization": process.env.NINJA_API_KEY
     }
 });
 ```
@@ -45,7 +45,7 @@ const myNanoNinjaClient = new NanoClient({
 
 **Javascript**
 ```js
-const NanoClient = require('@dev-ptera/nano-node-rpc').NanoClient;
+const NanoClient = require("@dev-ptera/nano-node-rpc").NanoClient;
 /* Same client configuration as typescript example. */
 ```
 
@@ -54,11 +54,11 @@ const NanoClient = require('@dev-ptera/nano-node-rpc').NanoClient;
 
 
 ```ts
-import { NanoClient } from '@dev-ptera/nano-node-rpc';
-import * as RPC from '@dev-ptera/nano-node-rpc/types'
+import { NanoClient } from "@dev-ptera/nano-node-rpc";
+import * as RPC from "@dev-ptera/nano-node-rpc/types"
 import { AxiosError } from "axios";
 
-const client = NanoClient({url: 'http://localhost:7076'})
+const client = NanoClient({ url: "http://localhost:7076" })
 
 // Some methods do not require arguments:
 client
@@ -105,7 +105,7 @@ E.g. the Nano `block_count` RPC method would be accessible via `client.block_cou
 If a method is not available as a method on `NanoClient`, you can use the `_send` method below: 
 
 ```js
-client._send('block_info', {
+client._send("block_info", {
   "json_block": true,
   "hash": "87434F8041869A01C8F6F263B87972D7BA443A72E0A97D7A3FD0CCC2358FD6F9"
 }).then(block_info => {
