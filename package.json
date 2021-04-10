@@ -1,7 +1,7 @@
 {
   "name": "@dev-ptera/nano-node-rpc",
   "version": "1.0.0",
-  "description": "A NodeJS client for the Nano RPC API",
+  "description": "A typescript nanocurrency client used to make node RPC calls.",
   "main": "dist/index.js",
   "files": [
     "dist",
@@ -21,12 +21,13 @@
   },
   "keywords": [
     "nano",
-    "proxy",
-    "server",
-    "express",
-    "nodejs",
     "nanocurrency",
-    "typescript"
+    "node",
+    "rpc",
+    "nodejs",
+    "typescript",
+    "banano",
+    "client"
   ],
   "bugs": {
     "url": "https://github.com/dev-ptera/nano-node-rpc/issues"
