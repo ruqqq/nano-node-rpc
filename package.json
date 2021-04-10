@@ -1,6 +1,6 @@
 {
   "name": "@dev-ptera/nano-node-rpc",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A NodeJS client for the Nano RPC API",
   "main": "dist/index.js",
   "files": [

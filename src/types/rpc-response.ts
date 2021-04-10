@@ -83,6 +83,19 @@ export type BlocksResponse = {
 export type ChainResponse = {
     blocks: string[];
 };
+export type ConfirmationQuorumResponse = {
+    quorum_delta: string;
+    online_weight_quorum_percent: number;
+    online_weight_minimum: string;
+    online_stake_total: string;
+    peers_stake_total: string;
+    peers_stake_required: string;
+    peers?: Array<{
+        account: string;
+        ip: string;
+        weight: string;
+    }>;
+};
 export type DelegatorsResponse = {
     [address: string]: string;
 };
@@ -125,4 +138,20 @@ export type RepresentativesOnlineWeightResponse = {
 };
 export type UnitConversionResponse = {
     amount: string;
+};
+export type ValidateAccountNumberResponse = {
+    valid: '1' | '0';
+};
+export type VersionResponse = {
+    rpc_version: string;
+    store_version: string;
+    protocol_version: string;
+    node_vendor: string;
+    store_vendor?: string; // Since V21.0
+    network?: string; // Since v20.0
+    network_identifier?: string; // Since v20.0
+    build_info?: string; // Since v20.0.
+};
+export type UptimeResponse = {
+    seconds: number;
 };

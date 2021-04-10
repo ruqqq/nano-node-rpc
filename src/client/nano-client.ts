@@ -253,6 +253,16 @@ export class NanoClient {
     }
 
     /**
+     * Returns information about node elections.
+     * @param {boolean} peer_details - Add peer details included in summation of peers_stake_total.
+     */
+    confirmation_quorum(peer_details?: boolean): Promise<RPC.ConfirmationQuorumResponse> {
+        return this._send('confirmation_quorum', {
+            peer_details,
+        });
+    }
+
+    /**
      * Returns a list of pairs of delegator names given account a representative and its balance
      * @param {string} account - The NANO account address.
      */
@@ -383,5 +393,29 @@ export class NanoClient {
         return this._send('representatives_online', {
             weight,
         });
+    }
+
+    /**
+     * Check whether account is a valid account number using checksum.
+     * @param {string} account - The NANO account address.
+     */
+    validate_account_number(account: string): Promise<RPC.ValidateAccountNumberResponse> {
+        return this._send('validate_account_number', {
+            account,
+        });
+    }
+
+    /**
+     * Returns version information for RPC, Store, Protocol (network),
+     */
+    version(): Promise<RPC.VersionResponse> {
+        return this._send('version');
+    }
+
+    /**
+     * Return node uptime in seconds
+     */
+    uptime(): Promise<RPC.UptimeResponse> {
+        return this._send('uptime');
     }
 }
