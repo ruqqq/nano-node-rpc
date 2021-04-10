@@ -44,6 +44,33 @@ export type AccountRepresentativeResponse = {
 export type AccountWeightResponse = {
     weight: string;
 };
+export type AccountsBalancesResponse = {
+    balances: {
+        [account: string]: {
+            balance: string;
+            pending: string;
+        };
+    };
+};
+export type AccountsFrontiersResponse = {
+    frontiers: {
+        [account: string]: string;
+    };
+};
+export type AccountsPendingResponse = {
+    blocks: {
+        [account: string]:
+            | string[]
+            | {
+                  [block: string]:
+                      | string
+                      | {
+                            amount: string;
+                            source: string;
+                        };
+              };
+    };
+};
 export type AvailableSupplyResponse = {
     available: string;
 };
@@ -97,7 +124,7 @@ export type ConfirmationQuorumResponse = {
     }>;
 };
 export type DelegatorsResponse = {
-    [address: string]: string;
+    [account: string]: string;
 };
 export type DelegatorsCountResponse = {
     count: number;
@@ -107,7 +134,7 @@ export type FrontiersCountResponse = {
 };
 export type FrontiersResponse = {
     frontiers: {
-        [address: string]: string;
+        [account: string]: string;
     };
 };
 export type PeersResponse = {
@@ -123,7 +150,7 @@ export type PeersResponse = {
 };
 export type RepresentativesResponse = {
     representatives: {
-        [address: string]: string;
+        [account: string]: string;
     };
 };
 export type RepresentativesOnlineResponse = {
@@ -131,7 +158,7 @@ export type RepresentativesOnlineResponse = {
 };
 export type RepresentativesOnlineWeightResponse = {
     representatives: {
-        [address: string]: {
+        [account: string]: {
             weight: string;
         };
     };

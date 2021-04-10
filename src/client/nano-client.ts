@@ -187,6 +187,54 @@ export class NanoClient {
     }
 
     /**
+     * Returns how many RAW is owned and how many have not yet been received by accounts list
+     * @param {string[]} accounts - Array of NANO account addresses.
+     */
+    accounts_balances(accounts: string[]): Promise<RPC.AccountsBalancesResponse> {
+        return this._send('accounts_balances', {
+            accounts,
+        });
+    }
+
+    /**
+     * Returns a list of pairs of account and block hash representing the head block for accounts list
+     * @param {string[]} accounts - Array of NANO account addresses.
+     */
+    accounts_frontiers(accounts: string[]): Promise<RPC.AccountsFrontiersResponse> {
+        return this._send('accounts_frontiers', {
+            accounts,
+        });
+    }
+
+    /**
+     * Returns a list of block hashes which have not yet been received by these accounts
+     * @param {string[]} accounts - Array of NANO account addresses
+     * @param {number} count - Max count of block hashes to return
+     * @param {string} params.threshold - Return pending block hashes with amount more or equal to
+     * @param {boolean} params.source - Return pending block hashes with amount and source accounts
+     * @param {boolean} params.include_active - Include active (not confirmed) blocks
+     * @param {boolean} params.sorting - Additionally sorts each account's blocks by their amounts in descending order.
+     * @param {boolean} params.include_only_confirmed - Only returns blocks which have their confirmation height set or are undergoing confirmation height processing.
+     */
+    accounts_pending(
+        accounts: string[],
+        count = 1,
+        params?: {
+            threshold?: string;
+            source?: boolean;
+            include_active?: boolean;
+            sorting?: boolean;
+            include_only_confirmed?: boolean;
+        }
+    ): Promise<RPC.AccountsPendingResponse> {
+        return this._send('accounts_pending', {
+            accounts,
+            count,
+            ...params,
+        });
+    }
+
+    /**
      * Returns how many rai are in the public supply
      */
     available_supply(): Promise<RPC.AvailableSupplyResponse> {
@@ -249,6 +297,7 @@ export class NanoClient {
         return this._send('chain', {
             block,
             count,
+            ...params,
         });
     }
 
