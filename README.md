@@ -130,6 +130,10 @@ client._send("block_info", {
 });
 ```
 
+## Generic Typing
+
+Some RPC responses will change depending on the optional params included in the request. 
+
 ## Local Development
 
 `yarn build` > creates output in the `/dist` folder

@@ -57,6 +57,7 @@ export type AccountsFrontiersResponse = {
         [account: string]: string;
     };
 };
+// TODO: More graceful type here.
 export type AccountsPendingResponse = {
     blocks: {
         [account: string]:
@@ -70,6 +71,14 @@ export type AccountsPendingResponse = {
                         };
               };
     };
+};
+export type ActiveDifficultyResponse = {
+    multiplier: number;
+    network_current: string;
+    network_minimum: string;
+    network_receive_current: string;
+    network_receive_minimum: string;
+    difficulty_trend?: number[];
 };
 export type AvailableSupplyResponse = {
     available: string;
@@ -87,11 +96,15 @@ export type BlockResponse = {
 export type BlockAccountResponse = {
     account: string;
 };
+export type BlockConfirmResponse = {
+    started: '1' | '0';
+};
 export type BlockCountResponse = {
     count: number;
     unchecked: number;
     cemented?: number;
 };
+// TODO: Add type for non json_block responses
 export type BlocksResponse = {
     blocks: {
         [hash: string]: {
@@ -137,15 +150,14 @@ export type FrontiersResponse = {
         [account: string]: string;
     };
 };
-export type PeersResponse = {
+export type PeersResponseDetails = {
+    protocol_version: string;
+    node_id: string;
+    type: string;
+};
+export type PeersResponse<T extends PeersResponseDetails | undefined> = {
     peers: Array<{
-        [ip: string]:
-            | ''
-            | {
-                  protocol_version: string;
-                  node_id: string;
-                  type: string;
-              };
+        [ip: string]: T extends PeersResponseDetails ? PeersResponseDetails : '';
     }>;
 };
 export type RepresentativesResponse = {

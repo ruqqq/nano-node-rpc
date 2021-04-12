@@ -31,7 +31,7 @@ export class NanoClient {
      * @private
      * @description Create an RPC request body to be later used by `#_send`.
      * @param {string} action - A given RPC action.
-     * @param {Object|Array} params - Parameters to be passed to the RPC daemon
+     * @param {params} params - Optional params for RPC request
      * @return {Object} Returns an object containing the request (url, body).
      */
     private _buildRPCBody(action: string, params: Object = {}): string {
@@ -50,7 +50,7 @@ export class NanoClient {
      * @private
      * @description Send the request to the daemon
      * @param {string} method - the name of the RPC method
-     * @param {Object} params - Parameters to be passed to the RPC method
+     * @param {params} params - Optional params for RPC request
      * @returns A Promise which is resolved if the request successfully
      * fetches the data without error, and rejected otherwise.
      * Failure can happen either because of a mis-configured request,
@@ -110,11 +110,7 @@ export class NanoClient {
      * Reports send/receive information for a account
      * @param {string} account - The NANO account address.
      * @param {number} count - Response length (default 1)
-     * @param {boolean} params.raw - Output all parameters of the block itself as seen in block_create or other APIs returning blocks
-     * @param {string} params.head - Use this block as the head of the account instead.
-     * @param {number} params.offset - Skips a number of blocks starting from head (if given). Not often used.
-     * @param {boolean} params.reverse - Reverse search results.
-     * @param {Array<string>} params.account_filter - Filter results to only these accounts.
+     * @param {params} params - Optional params for RPC request
      */
     account_history(
         account: string,
@@ -138,9 +134,7 @@ export class NanoClient {
      * Returns frontier, open block, change representative block, balance,
      * last modified timestamp from local database & block count for account
      * @param {string} account - The NANO account address.
-     * @param {boolean} params.representative - Include representative for account
-     * @param {boolean} params.weight - Include voting weight for account
-     * @param {boolean} params.pending - Include pending balance for account
+     * @param {params} params - Optional params for RPC request
      */
     account_info(
         account: string,
@@ -210,11 +204,7 @@ export class NanoClient {
      * Returns a list of block hashes which have not yet been received by these accounts
      * @param {string[]} accounts - Array of NANO account addresses
      * @param {number} count - Max count of block hashes to return
-     * @param {string} params.threshold - Return pending block hashes with amount more or equal to
-     * @param {boolean} params.source - Return pending block hashes with amount and source accounts
-     * @param {boolean} params.include_active - Include active (not confirmed) blocks
-     * @param {boolean} params.sorting - Additionally sorts each account's blocks by their amounts in descending order.
-     * @param {boolean} params.include_only_confirmed - Only returns blocks which have their confirmation height set or are undergoing confirmation height processing.
+     * @param {params} params - Optional params for RPC request
      */
     accounts_pending(
         accounts: string[],
@@ -235,6 +225,16 @@ export class NanoClient {
     }
 
     /**
+     * Returns the difficulty values
+     * @param {boolean} include_trend - Include the trend of difficulty seen on the network
+     */
+    active_difficulty(include_trend = false): Promise<RPC.ActiveDifficultyResponse> {
+        return this._send('active_difficulty', {
+            include_trend,
+        });
+    }
+
+    /**
      * Returns how many rai are in the public supply
      */
     available_supply(): Promise<RPC.AvailableSupplyResponse> {
@@ -244,6 +244,7 @@ export class NanoClient {
     /**
      * Retrieves a json representation of block
      * @param {string} hash - A block hash.
+     * @param {boolean} json_block - Response will contain a JSON subtree instead of a JSON string.
      */
     block(hash: string, json_block = true): Promise<RPC.BlockResponse> {
         return this._send('block', {
@@ -263,6 +264,16 @@ export class NanoClient {
     }
 
     /**
+     * Request confirmation for block from known online representative nodes.
+     * @param {string} hash - A block hash.
+     */
+    block_confirm(hash: string): Promise<RPC.BlockConfirmResponse> {
+        return this._send('block_confirm', {
+            hash,
+        });
+    }
+
+    /**
      * Reports the number of blocks in the ledger and unchecked synchronizing blocks
      */
     block_count(): Promise<RPC.BlockCountResponse> {
@@ -271,11 +282,13 @@ export class NanoClient {
 
     /**
      * Retrieves a json representations of blocks
-     * @param {Array<string>} hashes - A list of block hashes.
+     * @param {string[]} hashes - A list of block hashes.
+     * @param {boolean} json_block - Response will contain a JSON subtree instead of a JSON string.
      */
-    blocks(hashes: Array<string>, json_block = true): Promise<RPC.BlocksResponse> {
+    blocks(hashes: string[], json_block = true): Promise<RPC.BlocksResponse> {
         return this._send('blocks', {
             hashes,
+            json_block
         });
     }
 
@@ -283,8 +296,7 @@ export class NanoClient {
      * Returns a list of block hashes in the account chain starting at block up to count
      * @param {string} block - A block hash.
      * @param {number} count - Max count of items to return.
-     * @param {boolean} params.offset - Block hash offset amount
-     * @param {boolean} params.reverse - Reverse results
+     * @param {params} params - Optional params for RPC request
      */
     chain(
         block: string,
@@ -394,7 +406,7 @@ export class NanoClient {
      * Returns a list of pairs of online peer IPv6:port and its node protocol network version
      * @param {boolean} peer_details - Include network version and node ID
      */
-    peers(peer_details = true): Promise<RPC.PeersResponse> {
+    peers<T extends RPC.PeersResponseDetails | undefined>(peer_details = true): Promise<RPC.PeersResponse<T>> {
         return this._send('peers', {
             peer_details,
         });
