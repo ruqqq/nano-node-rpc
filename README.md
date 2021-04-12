@@ -132,7 +132,8 @@ client._send("block_info", {
 
 ## Generic Typing
 
-Some RPC responses will change depending on the optional params included in the request. 
+Some RPC response types will change depending on the optional parameters included in the request.
+`peers` is an example of a request that can conditionally include `PeersResponseDetails` when the flag `peer_details` is true.
 
 ## Local Development
 
