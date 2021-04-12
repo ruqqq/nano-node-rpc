@@ -1,6 +1,6 @@
 # @dev-ptera/nano-node-rpc
 
-This is a Nanocurrency Remote Procedure Call (RPC) client written in Typescript with a singular dependency on [axios](https://www.npmjs.com/package/axios). 
+This is a Nanocurrency remote procedure call (RPC) client written in Typescript with a singular dependency on [axios](https://www.npmjs.com/package/axios). 
 
 Use this package to fetch Nanocurrency data from either a local Nano Node, 
 a [Nano Node Proxy server](https://github.com/dev-ptera/nano-rpc-proxy), 

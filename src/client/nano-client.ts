@@ -282,7 +282,7 @@ export class NanoClient {
     /**
      * Returns a list of block hashes in the account chain starting at block up to count
      * @param {string} block - A block hash.
-     * @param {Number} count - Max count of items to return.
+     * @param {number} count - Max count of items to return.
      * @param {boolean} params.offset - Block hash offset amount
      * @param {boolean} params.reverse - Reverse results
      */
@@ -334,7 +334,7 @@ export class NanoClient {
     /**
      * Returns a list of pairs of account and block hash representing the head block starting at account up to count
      * @param {string} account - The NANO account address.
-     * @param {Number} count - How much items to get from the list. (defaults to 1)
+     * @param {number} count - How much items to get from the list. (defaults to 1)
      */
     frontiers(account: string, count = 1): Promise<RPC.FrontiersResponse> {
         return this._send('frontiers', {
@@ -422,7 +422,7 @@ export class NanoClient {
 
     /**
      * Returns a list of pairs of representative and its voting weight
-     * @param {Number} count - Count of items to return. (Defaults to 1)
+     * @param {number} count - Count of items to return. (Defaults to 1)
      * @param {boolean} sorting - Sort the returned results by DESC.
      */
     representatives(count = 1, sorting = false): Promise<RPC.RepresentativesResponse> {
