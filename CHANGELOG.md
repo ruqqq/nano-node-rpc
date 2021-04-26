@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.1
+
+### Added
+
+- Added MIT license to package.json
+
 ## v1.0.0 
 
 ### Added
