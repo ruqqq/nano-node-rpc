@@ -1,3 +1,6 @@
+export type ErrorResponse = {
+    error: string;
+};
 export type AccountBalanceResponse = {
     balance: string;
     pending: string;

@@ -288,7 +288,7 @@ export class NanoClient {
     blocks(hashes: string[], json_block = true): Promise<RPC.BlocksResponse> {
         return this._send('blocks', {
             hashes,
-            json_block
+            json_block,
         });
     }
 

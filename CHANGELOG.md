@@ -2,6 +2,10 @@
 
 ## v1.0.2
 
+### Added
+
+- Added type `ErrorResponse` for RPC errors.
+
 ### Changed
 
 - Changed `account_info` `params` to be optional.
