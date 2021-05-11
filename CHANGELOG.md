@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.2
+
+### Changed
+
+- Changed `account_info` `params` to be optional.
+
 ## v1.0.1
 
 ### Added

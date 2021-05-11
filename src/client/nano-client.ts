@@ -138,7 +138,7 @@ export class NanoClient {
      */
     account_info(
         account: string,
-        params: {
+        params?: {
             representative?: boolean;
             weight?: boolean;
             pending?: boolean;
