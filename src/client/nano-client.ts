@@ -338,7 +338,7 @@ export class NanoClient {
      * @param {string} account - The NANO account address.
      */
     delegators_count(account: string): Promise<RPC.DelegatorsCountResponse> {
-        return this._send('delegators', {
+        return this._send('delegators_count', {
             account,
         });
     }

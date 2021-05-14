@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.3
+
+### Fixed
+
+- Fixed `delegators_count` function to now send correct RPC action.
+
 ## v1.0.2
 
 ### Added
