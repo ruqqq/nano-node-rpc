@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.0.4
+
+### Fixed
+
+- Fixed `delegators` RPC return type.
+
 ## v1.0.3
 
 ### Fixed

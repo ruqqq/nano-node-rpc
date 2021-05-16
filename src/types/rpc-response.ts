@@ -140,7 +140,9 @@ export type ConfirmationQuorumResponse = {
     }>;
 };
 export type DelegatorsResponse = {
-    [account: string]: string;
+    delegators: {
+        [account: string]: string;
+    };
 };
 export type DelegatorsCountResponse = {
     count: number;
