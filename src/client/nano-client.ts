@@ -293,6 +293,27 @@ export class NanoClient {
     }
 
     /**
+     * Retrieves a json representations of block with more data than in `blocks`
+     * @param {string[]} hashes - A list of block hashes.
+     * @param {params} params - Optional params for RPC request
+     */
+    blocks_info(
+        hashes: string[],
+        params?: {
+            json_block?: boolean;
+            pending?: boolean;
+            source?: boolean;
+            balance?: boolean;
+            include_not_found?: boolean;
+        }
+    ): Promise<RPC.BlocksInfoResponse> {
+        return this._send('blocks_info', {
+            hashes,
+            ...params,
+        });
+    }
+
+    /**
      * Returns a list of block hashes in the account chain starting at block up to count
      * @param {string} block - A block hash.
      * @param {number} count - Max count of items to return.

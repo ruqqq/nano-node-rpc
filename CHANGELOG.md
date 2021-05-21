@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1.0
+
+### Added
+
+- Added RPC command for action `blocks_info`
+- Added type for block subtype `Subtype`.
+
 ## v1.0.4
 
 ### Fixed

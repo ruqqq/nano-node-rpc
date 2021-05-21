@@ -1,6 +1,7 @@
 export type ErrorResponse = {
     error: string;
 };
+export type Subtype = 'send' | 'receive' | 'change' | 'open';
 export type AccountBalanceResponse = {
     balance: string;
     pending: string;
@@ -14,7 +15,7 @@ export type AccountGetResponse = {
 export type AccountHistoryResponse = {
     account: string;
     history?: Array<{
-        type: 'send' | 'receive';
+        type: Subtype;
         account: string;
         amount: string;
         local_timestamp: number;
@@ -122,6 +123,35 @@ export type BlocksResponse = {
             work: string;
         };
     };
+};
+export type BlocksInfoResponse = {
+    blocks: {
+        [hash: string]: {
+            block_account: string;
+            amount: string;
+            balance?: string;
+            height: number;
+            local_timestamp: number;
+            confirmed: boolean;
+            contents:
+                | string
+                | {
+                      type: string;
+                      account: string;
+                      previous: string;
+                      representative: string;
+                      balance: string;
+                      link: string;
+                      link_as_account: string;
+                      signature: string;
+                      work: string;
+                  };
+            subtype: Subtype;
+            pending?: string;
+            source_account?: string;
+        };
+    };
+    blocks_not_found?: string[];
 };
 export type ChainResponse = {
     blocks: string[];
