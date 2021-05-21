@@ -134,7 +134,7 @@ export type BlocksInfoResponseContents = {
     link_as_account: string;
     signature: string;
     work: string;
-}
+};
 export type BlocksInfoResponse = {
     blocks: {
         [hash: string]: {
@@ -144,7 +144,7 @@ export type BlocksInfoResponse = {
             height: number;
             local_timestamp: number;
             confirmed: boolean;
-            contents: string | BlocksInfoResponseContents
+            contents: string | BlocksInfoResponseContents;
             subtype: Subtype;
             pending?: string;
             source_account?: string;
