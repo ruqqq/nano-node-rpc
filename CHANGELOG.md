@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.1.1
+
+### Added
+
+- Added `BlocksInfoResponseContents` type to help differentiate between `blocks_info` return type.
+
 ## v1.1.0
 
 ### Added

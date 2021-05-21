@@ -124,6 +124,17 @@ export type BlocksResponse = {
         };
     };
 };
+export type BlocksInfoResponseContents = {
+    type: string;
+    account: string;
+    previous: string;
+    representative: string;
+    balance: string;
+    link: string;
+    link_as_account: string;
+    signature: string;
+    work: string;
+}
 export type BlocksInfoResponse = {
     blocks: {
         [hash: string]: {
@@ -133,19 +144,7 @@ export type BlocksInfoResponse = {
             height: number;
             local_timestamp: number;
             confirmed: boolean;
-            contents:
-                | string
-                | {
-                      type: string;
-                      account: string;
-                      previous: string;
-                      representative: string;
-                      balance: string;
-                      link: string;
-                      link_as_account: string;
-                      signature: string;
-                      work: string;
-                  };
+            contents: string | BlocksInfoResponseContents
             subtype: Subtype;
             pending?: string;
             source_account?: string;
