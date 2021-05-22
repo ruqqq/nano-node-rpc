@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.0.0
+
+### Changed
+
+- Changed Subtype to not include `open` as an option.
+- Changed all `number` RPC response types to `string` since Nano RPC response always returns raw strings.
+
 ## v1.1.1
 
 ### Added

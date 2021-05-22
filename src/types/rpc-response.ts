@@ -1,13 +1,13 @@
 export type ErrorResponse = {
     error: string;
 };
-export type Subtype = 'send' | 'receive' | 'change' | 'open';
+export type Subtype = 'send' | 'receive' | 'change';
 export type AccountBalanceResponse = {
     balance: string;
     pending: string;
 };
 export type AccountBlockCountResponse = {
-    block_count: number;
+    block_count: string;
 };
 export type AccountGetResponse = {
     account: string;
@@ -18,8 +18,8 @@ export type AccountHistoryResponse = {
         type: Subtype;
         account: string;
         amount: string;
-        local_timestamp: number;
-        height: number;
+        local_timestamp: string;
+        height: string;
         hash: string;
     }>;
     previous?: string;
@@ -30,11 +30,11 @@ export type AccountInfoResponse = {
     open_block: string;
     representative_block: string;
     balance: string;
-    modified_timestamp: number;
-    block_count: number;
-    confirmation_height: number;
+    modified_timestamp: string;
+    block_count: string;
+    confirmation_height: string;
     confirmation_height_frontier: string;
-    account_version: number;
+    account_version: string;
     representative?: string;
     weight?: string;
     pending?: string;
@@ -77,12 +77,12 @@ export type AccountsPendingResponse = {
     };
 };
 export type ActiveDifficultyResponse = {
-    multiplier: number;
+    multiplier: string;
     network_current: string;
     network_minimum: string;
     network_receive_current: string;
     network_receive_minimum: string;
-    difficulty_trend?: number[];
+    difficulty_trend?: string[];
 };
 export type AvailableSupplyResponse = {
     available: string;
@@ -91,8 +91,8 @@ export type BlockResponse = {
     block_account: string;
     amount: string;
     balance: string;
-    height: number;
-    local_timestamp: number;
+    height: string;
+    local_timestamp: string;
     confirmed: boolean;
     contents: string;
     subtype: string;
@@ -104,9 +104,9 @@ export type BlockConfirmResponse = {
     started: '1' | '0';
 };
 export type BlockCountResponse = {
-    count: number;
-    unchecked: number;
-    cemented?: number;
+    count: string;
+    unchecked: string;
+    cemented?: string;
 };
 // TODO: Add type for non json_block responses
 export type BlocksResponse = {
@@ -141,8 +141,8 @@ export type BlocksInfoResponse = {
             block_account: string;
             amount: string;
             balance?: string;
-            height: number;
-            local_timestamp: number;
+            height: string;
+            local_timestamp: string;
             confirmed: boolean;
             contents: string | BlocksInfoResponseContents;
             subtype: Subtype;
@@ -157,7 +157,7 @@ export type ChainResponse = {
 };
 export type ConfirmationQuorumResponse = {
     quorum_delta: string;
-    online_weight_quorum_percent: number;
+    online_weight_quorum_percent: string;
     online_weight_minimum: string;
     online_stake_total: string;
     peers_stake_total: string;
@@ -174,10 +174,10 @@ export type DelegatorsResponse = {
     };
 };
 export type DelegatorsCountResponse = {
-    count: number;
+    count: string;
 };
 export type FrontiersCountResponse = {
-    count: number;
+    count: string;
 };
 export type FrontiersResponse = {
     frontiers: {
@@ -226,5 +226,5 @@ export type VersionResponse = {
     build_info?: string; // Since v20.0.
 };
 export type UptimeResponse = {
-    seconds: number;
+    seconds: string;
 };

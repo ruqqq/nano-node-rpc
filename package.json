@@ -1,6 +1,6 @@
 {
   "name": "@dev-ptera/nano-node-rpc",
-  "version": "1.1.1",
+  "version": "2.0.0",
   "description": "A typescript nanocurrency client used to make node RPC calls.",
   "main": "dist/index.js",
   "license": "MIT",

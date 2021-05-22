@@ -56,7 +56,7 @@ export class NanoClient {
      * Failure can happen either because of a mis-configured request,
      * server connectivity, or if `JSON.parse` fails
      */
-    private _send(method: string, params?: Object): Promise<any> {
+    private _send<T = any>(method: string, params?: Object): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             axios
                 .request({
@@ -69,7 +69,7 @@ export class NanoClient {
                     if (response.data.error) {
                         reject(response.data);
                     } else {
-                        resolve(typeof response.data === 'string' ? JSON.parse(response.data) : response.data);
+                        resolve(response.data);
                     }
                 })
                 .catch(reject);
@@ -307,7 +307,7 @@ export class NanoClient {
             include_not_found?: boolean;
         }
     ): Promise<RPC.BlocksInfoResponse> {
-        return this._send('blocks_info', {
+        return this._send<RPC.BlocksInfoResponse>('blocks_info', {
             hashes,
             ...params,
         });
