@@ -58,7 +58,7 @@ import { NanoClient } from "@dev-ptera/nano-node-rpc";
 import * as RPC from "@dev-ptera/nano-node-rpc/types"
 import { AxiosError } from "axios";
 
-const client = NanoClient({ url: "http://localhost:7076" })
+const client = new NanoClient({ url: "http://localhost:7076" })
 
 // Some methods do not require arguments:
 client

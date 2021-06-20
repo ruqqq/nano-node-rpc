@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.0.1
+
+### Fixed
+
+- Fixed `frontier_count` rpc action.
+
 ## v2.0.0
 
 ### Changed

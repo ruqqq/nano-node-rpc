@@ -176,7 +176,7 @@ export type DelegatorsResponse = {
 export type DelegatorsCountResponse = {
     count: string;
 };
-export type FrontiersCountResponse = {
+export type FrontierCountResponse = {
     count: string;
 };
 export type FrontiersResponse = {

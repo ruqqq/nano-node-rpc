@@ -379,8 +379,8 @@ export class NanoClient {
     /**
      * Reports the number of accounts in the ledger
      */
-    frontiers_count(): Promise<RPC.FrontiersCountResponse> {
-        return this._send('frontiers_count');
+    frontier_count(): Promise<RPC.FrontierCountResponse> {
+        return this._send('frontier_count');
     }
 
     /**
