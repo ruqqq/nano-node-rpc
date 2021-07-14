@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.0.2
+
+### Fixed
+
+- Fixed `peers` rpc return type.
+
 ## v2.0.1
 
 ### Fixed

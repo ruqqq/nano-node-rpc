@@ -190,9 +190,9 @@ export type PeersResponseDetails = {
     type: string;
 };
 export type PeersResponse<T extends PeersResponseDetails | undefined> = {
-    peers: Array<{
-        [ip: string]: T extends PeersResponseDetails ? PeersResponseDetails : '';
-    }>;
+    peers: {
+        [ip: string]: T extends PeersResponseDetails ? PeersResponseDetails : string;
+    };
 };
 export type RepresentativesResponse = {
     representatives: {
