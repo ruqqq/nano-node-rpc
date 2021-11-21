@@ -56,7 +56,7 @@ export class NanoClient {
      * Failure can happen either because of a mis-configured request,
      * server connectivity, or if `JSON.parse` fails
      */
-    private _send<T = any>(method: string, params?: Object): Promise<any> {
+     _send<T = any>(method: string, params?: Object): Promise<any> {
         return new Promise<any>((resolve, reject) => {
             axios
                 .request({
